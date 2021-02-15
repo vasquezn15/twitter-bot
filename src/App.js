@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import {React} from "react";
 import {
@@ -11,14 +10,21 @@ import Home from './Components/Home';
 
 function App() {
 
+  <Link to='./Components/Home'>
+    
+  </Link>
+
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-      </Switch>
-    </Router>
+      <Router>
+        <Switch>
+          <Route exact path='/'>
+              <Home />
+          </Route>
+          <Route path='/auth'>
+              
+          </Route>
+        </Switch>
+      </Router>
     );
   }
 
