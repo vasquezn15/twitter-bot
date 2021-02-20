@@ -7,6 +7,8 @@ import {
   Link
 } from "react-router-dom";
 import Home from './Components/Home';
+import About from './Components/About';
+import Navbar from './Components/NavBar';
 
 function App() {
 
@@ -19,6 +21,9 @@ function App() {
         <Switch>
           <Route exact path='/'>
               <Home />
+          </Route>
+          <Route exact path = '/about'>
+              <About />
           </Route>
           <Route path='/auth'>
               

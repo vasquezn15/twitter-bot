@@ -1,0 +1,18 @@
+.navbar{
+    max-width: 750px;
+    margin: auto; 
+}
+
+.loginForm{
+    max-width: 750px;
+    margin: auto;
+    padding-top: 50px;
+}
+
+.about{
+    font-size: large;
+    font-weight: bold;
+    max-width: 750px;
+    margin: auto;
+    text-align: center;
+}

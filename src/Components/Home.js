@@ -1,3 +1,4 @@
+  
 import React, { useState } from "react";
 import {
   BrowserRouter as Router,
@@ -9,6 +10,8 @@ import {
 import { Button, Menu, Grid, Header, Form, Image, Input, Label } from 'semantic-ui-react';
 import { Dropdown } from "bootstrap";
 import twitterImage from './Images/twitter_signin.png';
+import Navbar from './NavBar';
+import LoginForm from './Login';
 
 const axios = require('axios');
 
@@ -34,57 +37,17 @@ function Home() {
   }
 
   return (
-
-    <Grid textAlign="center" style={{ height: '100vh' }} verticalAlign='middle'>
-      
-        <Menu class='navbar'>
-        <Menu.Item><Link to='/'>Home</Link></Menu.Item>
-        <Menu.Item><Link to=''>About</Link></Menu.Item>
-        <Menu.Item>
-            <Button onClick={handleLogin}>
-              <Image
-              src={twitterImage}
-              size='small'
-              />
-            </Button>
-          </Menu.Item>
-        </Menu>
-
-      <Header as='h2' color='teal' textAlign='center' ver class="navbar-header">
-        <Image src='/logo.png' /> Twitter Detection Bot
-      </Header>
-      
-      
-      <Grid.Row>
-      <Form>
-        <Form.Field>
-                <Form.Input
-                  name="login"
-                  type="username"
-                  id="username"
-                  placeholder="Twitter Handle"
-                  label="username"
-                  value={credentials.username}
-                  onChange={handleUsername}  
-                />
-          </Form.Field>
-
-        <Button href=''>Login</Button>
-        
-        </Form>
-        <Form.Field>
-        <Button.Group style={{maxHeight: 50}}>
-          <Button>
-            <Button.Content visible>Check Following</Button.Content>
-          </Button>
-          <Button>Check Followers</Button>
-        </Button.Group>
-        </Form.Field>
-      </Grid.Row>
-      
-    </Grid>
+    
+    <React.Fragment>
+      <Navbar />
+      <LoginForm />
+    </React.Fragment>
 
   )
       
 }
 export default Home;
+
+
+
+
