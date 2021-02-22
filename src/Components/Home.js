@@ -30,7 +30,7 @@ function Home() {
 
 
   const handleLogin = (e) => {
-    axios.get("http://localhost:5001/auth/twitter");
+    axios.get("http://localhost:5000/auth/twitter");
   }
 
   const handleSubmit = (e) => {
