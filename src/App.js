@@ -1,36 +1,25 @@
-import './App.css';
-import {React} from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
-import Home from './Components/Home';
-import About from './Components/About';
-import Navbar from './Components/NavBar';
+import "./App.css";
+import { React } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Home from "./Components/Home";
+import About from "./Components/About";
+import Navbar from "./Components/NavBar";
 
 function App() {
 
-  <Link to='./Components/Home'>
-    
-  </Link>
-
   return (
-      <Router>
-        <Switch>
-          <Route exact path='/'>
-              <Home />
-          </Route>
-          <Route exact path = '/about'>
-              <About />
-          </Route>
-          <Route path='/auth'>
-              
-          </Route>
-        </Switch>
-      </Router>
-    );
-  }
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route exact path="/about">
+          <About />
+        </Route>
+        <Route path="/auth"></Route>
+      </Switch>
+    </Router>
+  );
+}
 
 export default App;

@@ -3,6 +3,10 @@
     margin: auto; 
 }
 
+label.hide{
+    display: none;
+}
+
 .loginForm{
     max-width: 750px;
     margin: auto;

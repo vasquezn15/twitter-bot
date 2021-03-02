@@ -1,5 +1,5 @@
   
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -20,29 +20,14 @@ const axios = require('axios');
 
 function Home() {
 
-  const [credentials, setCredentials] = useState({
-    username: ""
-  });
-
-  const handleUsername = (event, data) =>{
-    setCredentials({type: data.value})
-  }
-
-
-  const handleLogin = (e) => {
-    axios.get("http://localhost:5001/auth/twitter");
-  }
-
-  const handleSubmit = (e) => {
-  }
 
   return (
+
     
-    <React.Fragment>
+    <Route>
       <Navbar />
       <LoginForm />
-    </React.Fragment>
-
+    </Route>
   )
       
 }
