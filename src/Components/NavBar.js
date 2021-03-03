@@ -13,19 +13,16 @@ import twitterImage from "./Images/twitter_signin.png";
 import "./style.css";
 
 export default class Navigation extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.handleLoginClick = this.handleLoginClick.bind(this);
-//     this.handleLogoutClick = this.handleLogoutClick.bind(this);
-//     this.state = { isLoggedIn: false };
-//   }
-        state = {};
-
-
+  constructor(props) {
+    super(props);
+        
+    }
+    
+    
   itemClick = (e, { name }) => this.setState({ activeItem: name });
 
   handleLogoutClick() {
-    this.setState({ isLoggedIn: false });
+    this.props.logout()
   }
 
   handleLoginClick() {
@@ -33,11 +30,9 @@ export default class Navigation extends Component {
   }
 
   render() {
-    const { activeItem } = this.state;
-    const isLoggedIn = this.state.isLoggedIn;
 
     let button;
-    if (isLoggedIn) {
+    if (this.props.userId) {
       button = (
         <Button
           primary
@@ -71,7 +66,6 @@ export default class Navigation extends Component {
               exact
               to="/"
               name="home"
-              active={activeItem === "home"}
               onClick={this.itemClick}
             />
 
@@ -80,7 +74,6 @@ export default class Navigation extends Component {
               exact
               to="/About"
               name="about"
-              active={activeItem === "about"}
               onClick={this.itemClick}
             />
             <Menu.Item

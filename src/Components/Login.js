@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Component } from "react";
 import {
   Form,
   Image,
@@ -15,62 +15,50 @@ import "./style.css";
 import twitter_avatar from "./Images/twitter_avatar.png";
 const axios = require("axios");
 
-const LoginForm = () => {
-  const [userId, setUserId] = useState();
+export default class LoginForm extends Component {
 
-  const [username, setUsername] = useState();
+  state = {followers: [], usersFollowing: []};
 
-  const [followers, setFollowers] = useState([]);
+  constructor(props) {
+    super(props);
+    this.setState({ followers: [], usersFollowing: [] });
+    console.log(props)
+  }
 
-  const [usersFollowing, setFollowing] = useState([]);
-
-  const getQueryParam = (paramName) => {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    return urlParams.get(paramName);
-  };
-
-  const getFollowers = (e) => {
-    const username = getQueryParam("username");
-    const userId = getQueryParam("user_id");
-    setUserId(userId);
-    setUsername(username);
-    console.log(username, userId);
+  getFollowers = (e) => {
     axios
-      .get("http://localhost:5000/twitter/followers?user_id=" + userId)
+      .get(
+        "http://localhost:5000/twitter/followers?user_id=" + this.props.userId
+      )
       .then((response) => {
-        setFollowers(response.data.data);
+        this.setState({followers: response.data.data})
       })
       .catch((error) => {
         console.error(error);
       });
   };
 
-  const getUsersFollowing = (e) => {
-    const username = getQueryParam("username");
-    const userId = getQueryParam("user_id");
-    setUserId(userId);
-    setUsername(username);
-    console.log(username, userId);
+  getUsersFollowing = (e) => {
     axios
-      .get("http://localhost:5000/twitter/following?user_id=" + userId)
+      .get(
+        "http://localhost:5000/twitter/following?user_id=" + this.props.userId
+      )
       .then((response) => {
         if (response == null) {
           throw new Error("No one is following you");
         }
-        setFollowers(response.data.data);
+        this.setState({usersFollowing: response.data.data})
       })
       .catch((error) => {
         console.error(error);
       });
   };
-
-  return (
-    <div class="loginForm">
+  render() {
+    return (
       <Segment placeholder basic padded>
         <Grid columns={2} stackable textAlign="center">
           <Grid.Row>
-            <Segment>WELCOME {username}</Segment>
+            <Segment>WELCOME {this.props.username}</Segment>
           </Grid.Row>
           <Grid.Row verticalAlign="middle">
             <Grid.Column>
@@ -78,7 +66,7 @@ const LoginForm = () => {
                 primary
                 color="twitter"
                 size="huge"
-                onClick={getFollowers}
+                onClick={this.getFollowers}
               >
                 Get Followers
               </Button>
@@ -89,7 +77,7 @@ const LoginForm = () => {
                 primary
                 color="twitter"
                 size="huge"
-                onClick={getUsersFollowing}
+                onClick={this.getUsersFollowing}
               >
                 Get Following
               </Button>
@@ -98,34 +86,36 @@ const LoginForm = () => {
           <Grid.Row>
             <Grid.Column>
               <List>
-              {followers.map((follower) => (
-                <List.Item>
-                  <Image avatar src={twitter_avatar}/>
-                  <List.Content>
-                      <List.Description key={follower.id} content={follower.name}/>                        
-                  </List.Content>
-                </List.Item>
-                                    ))}
+                {this.state.followers.map((follower) => (
+                  <List.Item>
+                    <Image avatar src={twitter_avatar} />
+                    <List.Content>
+                      <List.Description
+                        key={follower.id}
+                        content={follower.name}
+                      />
+                    </List.Content>
+                  </List.Item>
+                ))}
               </List>
             </Grid.Column>
             <Divider></Divider>
             <Grid.Column>
               <List>
-              {usersFollowing.map((user) => (
-                <List.Item>
-                  <Image avatar src={twitter_avatar}/>
-                  <List.Content key={user.id} content={user.name}>
-                  </List.Content>
-                </List.Item>
-                                    ))}
-
+                {this.state.usersFollowing.map((user) => (
+                  <List.Item>
+                    <Image avatar src={twitter_avatar} />
+                    <List.Content
+                      key={user.id}
+                      content={user.name}
+                    ></List.Content>
+                  </List.Item>
+                ))}
               </List>
             </Grid.Column>
           </Grid.Row>
         </Grid>
       </Segment>
-    </div>
-  );
-};
-
-export default LoginForm;
+    );
+  }
+}
