@@ -1,17 +1,7 @@
-.navbar{
-    max-width: 750px;
-    margin: auto; 
-}
-
 label.hide{
     display: none;
 }
 
-.loginForm{
-    max-width: 750px;
-    margin: auto;
-    padding-top: 50px;
-}
 
 .about{
     font-size: large;
@@ -19,4 +9,13 @@ label.hide{
     max-width: 750px;
     margin: auto;
     text-align: center;
+}
+
+.LoginForm{
+    font-size: large;
+    margin-top: 15px;
+}
+
+.TwitterLoginButton{
+    margin-top: 15px;
 }

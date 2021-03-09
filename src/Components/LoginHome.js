@@ -12,8 +12,10 @@ import {
   List,
 } from "semantic-ui-react";
 import "./style.css";
+import Navbar from './NavBar';
 import twitter_avatar from "./Images/twitter_avatar.png";
 const axios = require("axios");
+
 
 const LoginForm = () => {
   const [userId, setUserId] = useState();

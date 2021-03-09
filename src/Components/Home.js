@@ -11,9 +11,9 @@ import { Button, Menu, Grid, Header, Form, Image, Input, Label } from 'semantic-
 import { Dropdown } from "bootstrap";
 import twitterImage from './Images/twitter_signin.png';
 import Navbar from './NavBar';
-import LoginForm from './Login';
-
+import ButtonLogin from './LoginForm';
 const axios = require('axios');
+
 
 
 
@@ -26,7 +26,7 @@ function Home() {
     
     <Route>
       <Navbar />
-      <LoginForm />
+      <ButtonLogin />
     </Route>
   )
       

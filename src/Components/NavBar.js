@@ -13,12 +13,12 @@ import twitterImage from "./Images/twitter_signin.png";
 import "./style.css";
 
 export default class Navigation extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.handleLoginClick = this.handleLoginClick.bind(this);
-//     this.handleLogoutClick = this.handleLogoutClick.bind(this);
-//     this.state = { isLoggedIn: false };
-//   }
+    constructor(props) {
+     super(props);
+     this.handleLoginClick = this.handleLoginClick.bind(this);
+     this.handleLogoutClick = this.handleLogoutClick.bind(this);
+     this.state = { isLoggedIn: false };
+   }
         state = {};
 
 
@@ -53,7 +53,7 @@ export default class Navigation extends Component {
         <Button
           primary
           color="twitter"
-          href="http://localhost:5000/twitter/authoriz"
+          href="http://localhost:5000/twitter/authorize"
           onClick={this.handleLoginClick}
           icon="twitter"
           content="Login with Twitter"
