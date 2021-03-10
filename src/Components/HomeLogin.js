@@ -11,6 +11,7 @@ import { Dropdown } from "bootstrap";
 import twitterImage from './Images/twitter_signin.png';
 import Navbar from './NavBar';
 import FormLogin from './LoginHome';
+import LoginHome from "./LoginHome";
 
 const axios = require('axios');
 
@@ -26,7 +27,7 @@ function Home() {
     
     <Route>
       <Navbar />
-      <FormLogin/>
+      <LoginHome exact path='/loginhome'/>
     </Route>
   )
       

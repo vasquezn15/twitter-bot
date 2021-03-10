@@ -7,7 +7,7 @@ import {
   useParams,
   NavLink,
 } from "react-router-dom";
-import { Menu, Segment, Button, Icon } from "semantic-ui-react";
+import { Menu, Segment, Button, Icon, Label } from "semantic-ui-react";
 import { Dropdown } from "bootstrap";
 import twitterImage from "./Images/twitter_signin.png";
 import "./style.css";
@@ -50,14 +50,19 @@ export default class Navigation extends Component {
       );
     } else {
       button = (
-        <Button
+        <Label
           primary
           color="twitter"
-          href="http://localhost:5000/twitter/authorize"
-          onClick={this.handleLoginClick}
-          icon="twitter"
-          content="Login with Twitter"
+          content='Please Login'
         />
+        // <Button
+        //   primary
+        //   color="twitter"
+        //   href="http://localhost:5000/twitter/authorize"
+        //   onClick={this.handleLoginClick}
+        //   icon="twitter"
+        //   content="Login with Twitter"
+        // />
       );
     }
 

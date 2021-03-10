@@ -17,7 +17,7 @@ import twitter_avatar from "./Images/twitter_avatar.png";
 const axios = require("axios");
 
 
-const LoginForm = () => {
+const LoginHome = () => {
   const [userId, setUserId] = useState();
 
   const [username, setUsername] = useState();
@@ -130,4 +130,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default LoginHome;
