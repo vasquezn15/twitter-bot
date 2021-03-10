@@ -18,15 +18,11 @@ export default class Navigation extends Component {
         
     }
     
-    
+
   itemClick = (e, { name }) => this.setState({ activeItem: name });
 
-  handleLogoutClick() {
+  handleLogoutClick = () => {
     this.props.logout()
-  }
-
-  handleLoginClick() {
-    this.setState({ isLoggedIn: true });
   }
 
   render() {
@@ -37,7 +33,6 @@ export default class Navigation extends Component {
         <Button
           primary
           color="twitter"
-          href="http://localhost:5000/twitter/logout"
           onClick={this.handleLogoutClick}
           icon="twitter"
           content="Logout"
@@ -49,7 +44,6 @@ export default class Navigation extends Component {
           primary
           color="twitter"
           href="http://localhost:5000/twitter/authoriz"
-          onClick={this.handleLoginClick}
           icon="twitter"
           content="Login with Twitter"
         />
