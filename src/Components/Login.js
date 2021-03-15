@@ -11,9 +11,12 @@ import {
   Label,
   List,
 } from "semantic-ui-react";
+import Cookies from 'js-cookie';
+import Cookies from 'universal-cookie';
 import "./style.css";
 import twitter_avatar from "./Images/twitter_avatar.png";
 const axios = require("axios");
+
 
 export default class LoginForm extends Component {
   state = { followers: [], usersFollowing: [] };
@@ -22,14 +25,33 @@ export default class LoginForm extends Component {
     super(props);
     this.setState({ followers: [], usersFollowing: [] });
     console.log(props);
+    console.log('Cookie: ', Cookies.get())
   }
 
+  readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+  }
   unfollowUser = (followerId) => {
 
+
+
+    console.log(this.readCookie('twitter_accesstoken'))
     const userId = this.props.userId;
     console.log('UserID: ' + userId);
     console.log('Follower Id: ' + followerId);
-    axios.get('http://localhost:5000/twitter/unfollow?follower_id=' + followerId + '&user_id=' + userId)
+    axios.get('http://localhost:5000/twitter/unfollow?follower_id=' + followerId + '&user_id=' + userId,{
+      headers: {
+        Authorization: "cookie1=value; cookie2=value; cookie3=value;",
+        withCredentials: true
+      }
+  })
     .then((response) => { 
       console.log(response);
     })
