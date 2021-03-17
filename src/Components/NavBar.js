@@ -1,15 +1,8 @@
 import React, { Component } from "react";
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useParams,
   NavLink,
 } from "react-router-dom";
-import { Menu, Segment, Button, Icon } from "semantic-ui-react";
-import { Dropdown } from "bootstrap";
-import twitterImage from "./Images/twitter_signin.png";
+import { Menu, Segment, Button } from "semantic-ui-react";
 import "./style.css";
 
 export default class Navigation extends Component {
@@ -21,10 +14,10 @@ export default class Navigation extends Component {
 
   itemClick = (e, { name }) => this.setState({ activeItem: name });
 
-  handleLogoutClick = () => {
-    this.props.logout()
-  }
-
+  logout = () => {
+    this.props.userId = null;
+    this.props.username = null;
+  };
   render() {
 
     let button;
@@ -33,19 +26,23 @@ export default class Navigation extends Component {
         <Button
           primary
           color="twitter"
-          onClick={this.handleLogoutClick}
+          onClick={this.logout}
           icon="twitter"
           content="Logout"
         />
       );
     } else {
       button = (
-        <Button
-          primary
-          color="twitter"
-          href="http://localhost:5000/twitter/authoriz"
-          icon="twitter"
-          content="Login with Twitter"
+        // <Button
+        //   primary
+        //   color="twitter"
+        //   href="http://localhost:5000/twitter/authoriz"
+        //   icon="twitter"
+        //   content="Login with Twitter"
+        // />
+        <Menu.Item
+          name='Please Login'
+          href=''
         />
       );
     }
