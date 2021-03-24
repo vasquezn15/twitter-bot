@@ -15,17 +15,19 @@ function App() {
   const [userId, setUserId] = useState(getQueryParam("user_id"));
   const [username, setUsername] = useState(getQueryParam("username"));
 
-  
+  const logout = () => {
+    setUserId(null);
+    setUsername(null);
+  };
   return (
     <Router>
       <Switch>
         
         <Route exact path="/">
           {!userId ? <LoginForm /> : <Redirect to='/home'/>}
-          
         </Route>
         <Route path='/home'>
-          <Home  userId={userId} username={username}/>
+          {userId ? <Home userId={userId} username={username} logout={logout}/> : <LoginForm/>}
         </Route>
         <Route exact path="/about">
           <About />

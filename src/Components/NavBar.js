@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import {
-  NavLink,
+  NavLink, Redirect,
 } from "react-router-dom";
 import { Menu, Segment, Button } from "semantic-ui-react";
 import "./style.css";
+import axios from 'axios'
+import App from "../App";
 
 export default class Navigation extends Component {
   constructor(props) {
@@ -14,10 +16,10 @@ export default class Navigation extends Component {
 
   itemClick = (e, { name }) => this.setState({ activeItem: name });
 
-  logout = () => {
-    this.props.userId = null;
-    this.props.username = null;
-  };
+  handleLogoutClick = () => {
+    this.props.logout()
+  }
+  
   render() {
 
     let button;
@@ -26,7 +28,7 @@ export default class Navigation extends Component {
         <Button
           primary
           color="twitter"
-          onClick={this.logout}
+          onClick={this.handleLogoutClick}
           icon="twitter"
           content="Logout"
         />
