@@ -12,28 +12,7 @@ import Navbar from "./NavBar";
 export default class LoginForm extends Component {
 
   render() {
-    let button;
-    if (this.props.userId) {
-      button = (
-        <Button
-          primary
-          color="twitter"
-          onClick={this.logout}
-          icon="twitter"
-          content="Logout"
-        />
-      );
-    } else {
-      button = (
-        <Button
-          primary
-          color="twitter"
-          href="http://localhost:5000/twitter/authoriz"
-          icon="twitter"
-          content="Login with Twitter"
-        />
-      );
-    }
+    
     return (
       <Segment textAlign='left' class='LoginForm'>
         <Navbar />
