@@ -16,16 +16,28 @@ import axios from 'axios'
 import NavBar from './NavBar'
 
 export default class Home extends Component {
-  state = { followers: [], usersFollowing: [], nextToken: "", previousToken: "", startList: 0, endList: 10 };
   // state = { followers: [], usersFollowing: [], nextToken: "", previousToken: "", previousActivePage: 0, currentActivePage: 1 };
   
   constructor(props) {
     super(props);
+    this.state = { followers: [], usersFollowing: [], nextToken: "", previousToken: "", startList: 0, endList: 10 };
     // this.setState({ followers: [], usersFollowing: [] });
     
     console.log('Constructor Props: ', props);
     // console.log('Cookie: ', Cookies.get())
   }
+
+  componentDidMount() {
+    if (!followers) {
+      this.setState({ followers: "No data retrieved at componentDidMount" });
+    }
+    this.getFollowers();
+      this.getUsersFollowing();
+    
+  }
+
+  // componentWillUnmount() {
+  // }
 
   handleLogoutClick = () => {
     this.props.logout()
@@ -108,20 +120,21 @@ export default class Home extends Component {
   
   getFollowers = (e) => {
 
-    var paginationTokenQuery = ""
-    var paginationToken = this.state.previousToken;
-    if (this.state.currentActivePage > this.state.previousActivePage) {
-      paginationToken = this.state.nextToken;
-    }
-    if (paginationToken) {
-      paginationTokenQuery = "&pagination_token=" + paginationToken;
-    }
+    // var paginationTokenQuery = ""
+    // var paginationToken = this.state.previousToken;
+    // if (this.state.currentActivePage > this.state.previousActivePage) {
+    //   paginationToken = this.state.nextToken;
+    // }
+    // if (paginationToken) {
+    //   paginationTokenQuery = "&pagination_token=" + paginationToken;
+    // }
     axios
       .get(
         "http://localhost:5000/twitter/followers?user_id=" + this.props.userId
       )
       .then((response) => {
-        this.setState({ followers: response.data.data });
+        console.log(`followers`, response)
+        this.setState({ followers: response.data });
         // this.setState({ followers: response.data.data, nextToken: response.data.meta.next_token, previousToken: response.data.meta.previous_token });
       })
       .catch((error) => {
@@ -156,67 +169,9 @@ export default class Home extends Component {
       });
   };
 
-  renderList = (e) => {
-    const list = this.state.usersFollowing;
-    var displayList = [];
-    const startIndex = 0;
-    const endIndex = 10;
-
-    for(var user in list) {
-      displayList.push(list[user]);
-    }
-    if (list.length > 10) {
-      displayList = list.slice(startIndex, endIndex);
-
-      return (
-        displayList.map((user) => {
-      <SemanticList.Item>
-            <Image avatar src={twitter_avatar} />
-            <SemanticList.Content
-          key={user.id}
-          content={user.name}
-            />
-            <SemanticList.Content floated='right'>
-            <Button size='tiny' onClick={() => this.unfollowUser(user.id)}>Unfollow</Button>
-            <Button size='tiny' floated='right'>Block</Button>
-            </SemanticList.Content>
-            </SemanticList.Item>
-        })
-      
-        // <div key={user.id} className="row">
-        //   <div className="image">
-        //     <img src={twitter_avatar} />
-        //   </div>
-        //   <div className="content">
-        //     <div>{user.name}</div>
-        //   </div>
-        // </div>
-      );
-    }
-    
-  }
+  
 
   render() {
-    
-    let button;
-    // if (this.isFollowing) {
-    //   button =
-    //     (
-    //     <Button
-    //       size="tiny"
-    //       onClick={() => this.unfollowUser(user.id)}
-    //       content="Unfollow"
-    //     />
-    //   )
-    // }
-    // else {
-    //   button = (
-    //     <Button
-    //       size="tiny"
-    //       content="Follow"
-    //     />
-    //   )
-    // }
 
     return (
       
@@ -227,16 +182,15 @@ export default class Home extends Component {
           <Grid.Row>
             <Segment>WELCOME {this.props.username}</Segment>
           </Grid.Row>
-          <Button onClick={this.isFollowing}>Test</Button>
           <Grid.Row verticalAlign="middle">
             <Grid.Column>
               <Button
                 primary
                 color="twitter"
                 size="huge"
-                onClick={this.getFollowers}
+                //onClick={this.getFollowers}
               >
-                Get Followers
+                Validate Followers
               </Button>
             </Grid.Column>
             <Divider vertical>Or</Divider>
@@ -245,9 +199,9 @@ export default class Home extends Component {
                 primary
                 color="twitter"
                 size="huge"
-                onClick={this.getUsersFollowing}
+                //onClick={this.getUsersFollowing}
               >
-                Get Following
+                Validate Following
               </Button>
             </Grid.Column>
           </Grid.Row>
@@ -260,7 +214,7 @@ export default class Home extends Component {
                     <Image avatar src={twitter_avatar} />
                     <SemanticList.Content
                         key={follower.id}
-                      content={follower.name}
+                      content={follower.name + " " + follower.username}
                       />
                     <SemanticList.Content floated='right'>
                       <Button size='tiny' floated='right'>Block</Button>
@@ -292,11 +246,18 @@ export default class Home extends Component {
                     <Image avatar src={twitter_avatar} />
                     <SemanticList.Content
                       key={user.id}
-                      content={user.name}
-                    />
-                    <SemanticList.Content floated='right'>
-                      <Button size='tiny' onClick={() => this.unfollowUser(user.id)}>Unfollow</Button>
-                      <Button size='tiny' floated='right'>Block</Button>
+                    >
+                      {user.name + " " }
+<Button size='mini' onClick={() => this.unfollowUser(user.id)} floated="right">Unfollow</Button>
+
+<Button size='mini' floated='right'>Block</Button>
+
+
+                    </SemanticList.Content>
+                    <SemanticList.Content animated textAlign='center-bottom'>
+                      Threat Level : Undefined
+                       {/*if validate following is false(not clicked) {Function to load threat level}
+                       else {dont show or loading logo} */}
                     </SemanticList.Content>
                   </SemanticList.Item>
                 ))}
@@ -310,7 +271,7 @@ export default class Home extends Component {
                   firstItem={null}
                   lastItem={null}
                   siblingRange={1}
-                  totalPages={8}
+                  totalPages={this.state.followers.length}
                   onPageChange={this.nextPage}
                   />
             </Grid.Column>
