@@ -11,6 +11,7 @@ import twitter_avatar from "./Images/twitter_avatar.png";
 // import Cookies from 'universal-cookie';
 import axios from 'axios'
 import NavBar from './NavBar'
+import "./style.css";
 
 export default class Home extends Component {
   state = { followers: [], usersFollowing: [] };
@@ -61,7 +62,7 @@ export default class Home extends Component {
         "http://localhost:5000/twitter/followers?user_id=" + this.props.userId
       )
       .then((response) => {
-        this.setState({ followers: response.data.data });
+        this.setState({ followers: response.data});
       })
       .catch((error) => {
         console.error(error);
@@ -88,73 +89,78 @@ export default class Home extends Component {
     return (
       <Segment placeholder basic padded>
         <NavBar userId={this.props.userId} username={this.props.username}/>
-        <Grid columns={2} stackable textAlign="center">
-          <Grid.Row>
-            <Segment>WELCOME {this.props.username}</Segment>
-          </Grid.Row>
-          <Grid.Row verticalAlign="middle">
-            <Grid.Column>
-              <Button
-                primary
-                color="twitter"
-                size="huge"
-                onClick={this.getFollowers}
-              >
-                Get Followers
-              </Button>
-            </Grid.Column>
-            <Divider vertical>Or</Divider>
-            <Grid.Column>
-              <Button
-                primary
-                color="twitter"
-                size="huge"
-                onClick={this.getUsersFollowing}
-              >
-                Get Following
-              </Button>
-            </Grid.Column>
-          </Grid.Row>
+        
+        <Grid columns={2} className = "gridContainer" stackable textAlign="center" >
+            <Grid.Row className = "homeGrid1">
+              <Segment>WELCOME {this.props.username}</Segment>
+            </Grid.Row>
+            <Grid.Row className = "homeGrid2" verticalAlign="middle">
+              <Grid.Column>
+                <Button
+                  primary
+                  color="twitter"
+                  size="huge"
+                  onClick={this.getFollowers}
+                >
+                  Get Followers
+                </Button>
+              </Grid.Column>
+              <Divider vertical>Or</Divider>
+              <Grid.Column>
+                <Button
+                  primary
+                  color="twitter"
+                  size="huge"
+                  onClick={this.getUsersFollowing}
+                >
+                  Get Following
+                </Button>
+              </Grid.Column>
+            </Grid.Row>
 
-          <Grid.Row>
-            <Grid.Column>
-              <List animated>
-                {this.state.followers.map((follower) => (
-                  <List.Item>
-                    <Image avatar src={twitter_avatar} />
-                    <List.Content
-                        key={follower.id}
-                      content={follower.name}
-                      />
-                    <List.Content floated='right'>
-                      <Button size='tiny' onClick={() => this.unfollowUser(follower.id)}>Unfollow</Button>
-                      <Button size='tiny' floated='right'>Block</Button>
-                    </List.Content>
-                  </List.Item>
-                ))}
-              </List>
-            </Grid.Column>
+            <Grid.Row className = "homeGrid3">
+              <Grid.Column>
+                <List animated>
+                  {this.state.followers.map((follower) => (
+                    <Segment vertical>
+                      <List.Item>
+                          <List.Content floated = 'left'
+                              key={follower.id}
+                            content={follower.name}
+                            />
+                          <List.Content floated='right'>
+                            {/*<Button size='tiny' onClick={() => this.unfollowUser(follower.id)}>Unfollow</Button>*/}
+                            <Button size='tiny' floated='right'>Block</Button>
+                          </List.Content>    
+                      </List.Item>
+                    </Segment>
+                  ))}
+                </List>
+              </Grid.Column>
 
-            <Divider></Divider>
-            <Grid.Column>
-              <List>
-                {this.state.usersFollowing.map((user) => (
-                  <List.Item>
-                    <Image avatar src={twitter_avatar} />
-                    <List.Content
-                      key={user.id}
-                      content={user.name}
-                    />
-                    <List.Content floated='right'>
-                      <Button size='tiny' onClick={() => this.unfollowUser(user.id)}>Unfollow</Button>
-                      <Button size='tiny' floated='right'>Block</Button>
-                    </List.Content>
-                  </List.Item>
-                ))}
-              </List>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+              <Divider></Divider>
+              <Grid.Column>
+                <List>
+                  {this.state.usersFollowing.map((user) => (
+                    <List.Item>
+                      <div>
+                        <Segment vertical>
+                          <List.Content floated = 'left'
+                            key={user.id}
+                            content={user.name}
+                          />
+                          <List.Content floated='right'>
+                            <Button size='tiny' onClick={() => this.unfollowUser(user.id)}>Unfollow</Button>
+                            <Button size='tiny'>Block</Button>
+                          </List.Content>
+                        </Segment> 
+                      </div>   
+                    </List.Item>
+                  ))}
+                </List>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
       </Segment>
     );
     
