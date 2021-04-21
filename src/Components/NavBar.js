@@ -1,31 +1,26 @@
 import React, { Component } from "react";
 import {
-  NavLink
+  NavLink, useHistory
 } from "react-router-dom";
 import { Menu, Segment, Button } from "semantic-ui-react";
 import "./style.css";
 
-export default class Navigation extends Component {
-  constructor(props) {
-    super(props);
-        
-  }
+function NavBar(props) {
+  let history = useHistory();
     
-  itemClick = (e, { name }) => this.setState({ activeItem: name });
-
-  handleLogoutClick = () => {
-    this.props.logout()
+  const handleLogoutClick = () => {
+    history.push('/');
+    props.logout();
   }
   
-  render() {
 
     let button;
-    if (this.props.userId) {
+    if (props.userId) {
       button = (
         <Button
           primary
           color="twitter"
-          onClick={this.handleLogoutClick}
+          onClick={handleLogoutClick}
           icon="twitter"
           content="Logout"
         />
@@ -48,7 +43,6 @@ export default class Navigation extends Component {
               exact
               to="/"
               name="home"
-              onClick={this.itemClick}
             />
 
             <Menu.Item
@@ -56,7 +50,6 @@ export default class Navigation extends Component {
               exact
               to="/About"
               name="about"
-              onClick={this.itemClick}
             />
             <Menu.Item
               content={button}
@@ -65,5 +58,6 @@ export default class Navigation extends Component {
         </Segment>
       </div>
     );
-  }
 }
+
+export default NavBar;
