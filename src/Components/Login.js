@@ -7,6 +7,7 @@ import {
 } from "semantic-ui-react";
 import "./style.css";
 import Navbar from "./NavBar";
+import axios from "axios";
 
 
 export default class LoginForm extends Component {
@@ -17,7 +18,7 @@ export default class LoginForm extends Component {
       <Segment textAlign='left' class='LoginForm'>
         <Navbar />
             <Header> Welcome to the Twitter Bot Detection Tool</Header>
-            <div class="LoginFormParagraphs">
+            <div className="LoginFormParagraphs">
               <p>
                 This tool uses Artificial Intelligence to detect detect which
                 accounts that follow you and the accounts that you follow are
@@ -28,7 +29,7 @@ export default class LoginForm extends Component {
               </p>
             </div>
 
-          <div class="TwitterLoginButton">
+          <div className="TwitterLoginButton">
             <Menu secondary>
               <Menu.Item content={<Button
           primary

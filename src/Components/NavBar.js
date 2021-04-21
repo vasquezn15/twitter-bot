@@ -1,19 +1,16 @@
 import React, { Component } from "react";
 import {
-  NavLink, Redirect,
+  NavLink
 } from "react-router-dom";
 import { Menu, Segment, Button } from "semantic-ui-react";
 import "./style.css";
-import axios from 'axios'
-import App from "../App";
 
 export default class Navigation extends Component {
   constructor(props) {
     super(props);
         
-    }
+  }
     
-
   itemClick = (e, { name }) => this.setState({ activeItem: name });
 
   handleLogoutClick = () => {
@@ -35,16 +32,8 @@ export default class Navigation extends Component {
       );
     } else {
       button = (
-        // <Button
-        //   primary
-        //   color="twitter"
-        //   href="http://localhost:5000/twitter/authoriz"
-        //   icon="twitter"
-        //   content="Login with Twitter"
-        // />
         <Menu.Item
           name='Please Login'
-          href=''
         />
       );
     }

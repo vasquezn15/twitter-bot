@@ -6,7 +6,7 @@ function About(){
     return(
         <React.Fragment>
             <Navbar />
-            <div class = "about">
+            <div className= "about">
                 <p>This is the About page</p>
             </div>    
         </React.Fragment>

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {
-  Image,
   Button,
   Segment,
   Grid,
@@ -11,9 +10,10 @@ import axios from "axios";
 import NavBar from "./NavBar";
 import ListFollowing from "./Lists/ListFollowing";
 import ListFollowers from "./Lists/ListFollowers";
-import e from "cors";
+import { Redirect } from "react-router";
 
 export default class Home extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -25,17 +25,11 @@ export default class Home extends Component {
       endList: 10,
       listToggle: true,
     };
-
-    console.log("Constructor Props: ", props);
   }
 
   componentDidMount() {
     this.getFollowers();
     this.getUsersFollowing();
-  }
-
-  componentDidUpdate() {
-    console.log("COMPONENT DID UPDATE", this.state);
   }
 
   handleLogoutClick = () => {
@@ -50,34 +44,14 @@ export default class Home extends Component {
       startList: 0,
       endList: 10,
     });
+    
   };
-
-  getCurrentUser() {
-    return this.props.userId
-  }
 
   clickListToggle = (e) => {
-    console.log("click list toggle and state", this.state.listToggle)
+    
   };
 
-  unfollowUser = (followerId) => {
-    const userId = this.props.userId;
-    axios.defaults.withCredentials = true;
-    axios
-      .get(
-        "http://localhost:5000/twitter/unfollow?follower_id=" +
-          followerId +
-          "&user_id=" +
-          userId
-      )
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
-
+  
   nextPage = (e, data) => {
     var datum = data.activePage * 10;
     this.setState({ endList: datum, startList: datum - 10 });
@@ -94,9 +68,7 @@ export default class Home extends Component {
         "http://localhost:5000/twitter/followers?user_id=" + this.props.userId
       )
       .then((response) => {
-        console.log(`followers`, response);
         this.setState({ followers: response.data });
-        // this.setState({ followers: response.data.data, nextToken: response.data.meta.next_token, previousToken: response.data.meta.previous_token });
       })
       .catch((error) => {
         console.error(error);
@@ -112,12 +84,7 @@ export default class Home extends Component {
         if (response == null) {
           throw new Error("No one is following you");
         }
-        console.log("response users Following", response.data.data);
-
-        this.setState({ followings: response.data.data }, () => {
-          console.log("setFollowingState");
-          console.log(this.state);
-        });
+        this.setState({ followings: response.data.data });
       })
       .catch((error) => {
         console.error(error);
@@ -169,16 +136,7 @@ export default class Home extends Component {
                 endList={this.state.endList}
               />
 
-              <Pagination
-                boundaryRange={0}
-                defaultActivePage={1}
-                ellipsisItem={null}
-                firstItem={null}
-                lastItem={null}
-                siblingRange={1}
-                totalPages={Math.round(this.state.followers.length / 10) + 1}
-                onPageChange={this.nextPage}
-              />
+              
             </Grid.Column>
 
             <Divider></Divider>

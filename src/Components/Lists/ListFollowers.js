@@ -1,17 +1,18 @@
 import React, { Component } from "react";
-import { List, Image, Button, Container } from "semantic-ui-react";
+import { List, Image, Button, Segment, Pagination } from "semantic-ui-react";
 import twitter_avatar from "../Images/twitter_avatar.png";
 
-export default class ListFollowing extends Component {
+export default class ListFollowers extends Component {
   constructor(props) {
     super(props);
-    console.log("LISTFOLLOWers PROPS",props)
-    }
+      this.state = {
+        isNull:false
+      }
+  }
 
   render() {
-      return (            
-        
-        <List animated className='followersList'>
+    return (
+      <List animated className="followersList">
         {this.props.followers
           .slice(this.props.startList, this.props.endList)
           .map((follower) => (
@@ -26,9 +27,26 @@ export default class ListFollowing extends Component {
                   Block
                 </Button>
               </List.Content>
+
+              <Segment loading={this.state.isNull ? false : true}>
+                <List.Content animated textAlign="center-bottom">
+                  Threat Level : Undefined
+                </List.Content>
+              </Segment>
             </List.Item>
           ))}
-            </List>
+            <Pagination
+                boundaryRange={0}
+                defaultActivePage={1}
+                ellipsisItem={null}
+                firstItem={null}
+                lastItem={null}
+                siblingRange={1}
+                totalPages={Math.round(this.props.followers.length / 10) + 1}
+                // onPageChange={this.nextPage}
+              />
+        </List>
+        
     );
   }
 }
