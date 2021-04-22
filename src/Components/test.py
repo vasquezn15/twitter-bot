@@ -15,6 +15,6 @@ resp = {
 }
 
 for i in range(len(resp["Data"])):
-    print(json.dumps(resp["Data"][i]["id"]))
+    print(json.dumps(resp["Data"][i]))
 
 sys.stdout.flush()

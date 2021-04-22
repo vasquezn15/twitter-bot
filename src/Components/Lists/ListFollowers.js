@@ -17,7 +17,7 @@ export default class ListFollowers extends Component {
           .slice(this.props.startList, this.props.endList)
           .map((follower) => (
             <List.Item>
-              <Image avatar src={twitter_avatar} />
+              <Image avatar src={follower.profile_image_url} />
               <List.Content
                 key={follower.id}
                 content={follower.name + " " + follower.username}

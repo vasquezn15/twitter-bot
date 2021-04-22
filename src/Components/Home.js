@@ -69,6 +69,7 @@ export default class Home extends Component {
       )
       .then((response) => {
         this.setState({ followers: response.data });
+        console.log("GET FOLLOWERS STATE", this.state)
       })
       .catch((error) => {
         console.error(error);

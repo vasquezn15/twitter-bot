@@ -22,6 +22,15 @@ export default class ListFollowing extends Component {
           userId
       )
       .then((response) => {
+        console.log(response)
+        if (response.data.error) {
+          // TODO: Make special alert that unfollowed failed
+          alert(response.data.message);
+          return;
+        }
+        console.log('New list of followings from unfollow user', this.props.followings);
+        alert(response.data.message);
+        this.props.followings = this.props.followings.filter((user) => user.id !== followerId);
       })
       .catch((error) => {
         
@@ -35,7 +44,7 @@ export default class ListFollowing extends Component {
           .slice(this.props.startList, this.props.endList)
           .map((user) => (
             <List.Item>
-              <Image avatar src={twitter_avatar} />
+              <Image avatar src={user.profile_image_url} />
               <List.Content key={user.id}>
                 {user.name + " "}
                 <Button
