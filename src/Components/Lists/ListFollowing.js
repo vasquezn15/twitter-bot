@@ -1,15 +1,21 @@
 import React, { Component } from "react";
-import { List, Image, Button, Segment } from "semantic-ui-react";
-import twitter_avatar from "../Images/twitter_avatar.png";
-import axios from 'axios';
+import { List, Image, Button, Segment, Pagination } from "semantic-ui-react";
+import axios from "axios";
 
 export default class ListFollowing extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isNull:false
-    }
+      isNull: false,
+      startList: 0,
+      endList: 10,
+    };
   }
+
+  nextPage = (e, data) => {
+    var datum = data.activePage * 10;
+    this.setState({ endList: datum, startList: datum - 10 });
+  };
 
   unfollowUser = (followerId) => {
     const userId = this.props.userId;
@@ -22,26 +28,29 @@ export default class ListFollowing extends Component {
           userId
       )
       .then((response) => {
-        console.log(response)
+        console.log(response);
         if (response.data.error) {
           // TODO: Make special alert that unfollowed failed
           alert(response.data.message);
           return;
         }
-        console.log('New list of followings from unfollow user', this.props.followings);
+        console.log(
+          "New list of followings from unfollow user",
+          this.props.followings
+        );
         alert(response.data.message);
-        this.props.followings = this.props.followings.filter((user) => user.id !== followerId);
+        this.props.followings = this.props.followings.filter(
+          (user) => user.id !== followerId
+        );
       })
-      .catch((error) => {
-        
-      });
+      .catch((error) => {});
   };
 
   render() {
     return (
       <List animated className="followingList">
         {this.props.followings
-          .slice(this.props.startList, this.props.endList)
+          .slice(this.state.startList, this.state.endList)
           .map((user) => (
             <List.Item>
               <Image avatar src={user.profile_image_url} />
@@ -60,14 +69,26 @@ export default class ListFollowing extends Component {
                 </Button>
               </List.Content>
               <List.Content animated textAlign="center-bottom">
-              Threat Level :
-              <Segment vertical='center' loading={this.state.isNull ? false : true}>
-                   Undefined
-              </Segment>
+                Threat Level :
+                <Segment
+                  vertical="center"
+                  loading={this.state.isNull ? false : true}
+                >
+                  Undefined
+                </Segment>
               </List.Content>
-
             </List.Item>
           ))}
+        <Pagination
+          boundaryRange={0}
+          defaultActivePage={1}
+          ellipsisItem={null}
+          firstItem={null}
+          lastItem={null}
+          siblingRange={1}
+          totalPages={Math.round(this.props.followings.length / 10) + 1}
+          onPageChange={this.nextPage}
+        />
       </List>
     );
   }

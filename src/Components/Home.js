@@ -52,10 +52,7 @@ export default class Home extends Component {
   };
 
   
-  nextPage = (e, data) => {
-    var datum = data.activePage * 10;
-    this.setState({ endList: datum, startList: datum - 10 });
-  };
+  
 
   previousPage = (e) => {
     this.currentActivePage -= 10;
@@ -149,16 +146,7 @@ export default class Home extends Component {
                 endList={this.state.endList}
               />
 
-              <Pagination
-                boundaryRange={0}
-                defaultActivePage={1}
-                ellipsisItem={null}
-                firstItem={null}
-                lastItem={null}
-                siblingRange={1}
-                totalPages={Math.round(this.state.followings.length / 10) + 1}
-                onPageChange={this.nextPage}
-              />
+              
             </Grid.Column>
           </Grid.Row>
         </Grid>

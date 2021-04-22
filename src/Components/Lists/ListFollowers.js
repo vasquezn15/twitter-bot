@@ -6,15 +6,22 @@ export default class ListFollowers extends Component {
   constructor(props) {
     super(props);
       this.state = {
-        isNull:false
+        isNull: false,
+        startList: 0,
+        endList: 10
       }
   }
+
+  nextPage = (e, data) => {
+    var datum = data.activePage * 10;
+    this.setState({ endList: datum, startList: datum - 10 });
+  };
 
   render() {
     return (
       <List animated className="followersList">
         {this.props.followers
-          .slice(this.props.startList, this.props.endList)
+          .slice(this.state.startList, this.state.endList)
           .map((follower) => (
             <List.Item>
               <Image avatar src={follower.profile_image_url} />
@@ -22,17 +29,20 @@ export default class ListFollowers extends Component {
                 key={follower.id}
                 content={follower.name + " " + follower.username}
               />
-              <List.Content floated="right">
                 <Button size="tiny" floated="right">
                   Block
                 </Button>
-              </List.Content>
+             
 
-              <Segment loading={this.state.isNull ? false : true}>
                 <List.Content animated textAlign="center-bottom">
-                  Threat Level : Undefined
-                </List.Content>
-              </Segment>
+                Threat Level :
+                <Segment
+                  vertical="center"
+                  loading={this.state.isNull ? false : true}
+                >
+                  Undefined
+                </Segment>
+              </List.Content>
             </List.Item>
           ))}
             <Pagination
@@ -43,7 +53,7 @@ export default class ListFollowers extends Component {
                 lastItem={null}
                 siblingRange={1}
                 totalPages={Math.round(this.props.followers.length / 10) + 1}
-                // onPageChange={this.nextPage}
+                onPageChange={this.nextPage}
               />
         </List>
         
