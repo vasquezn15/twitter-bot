@@ -49,7 +49,7 @@ export default class ListFollowing extends Component {
   };
 
   renderList() {
-
+    // Change here
   }
 
   render() {
