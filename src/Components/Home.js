@@ -11,6 +11,7 @@ import NavBar from "./NavBar";
 import ListFollowing from "./Lists/ListFollowing";
 import ListFollowers from "./Lists/ListFollowers";
 import { Redirect } from "react-router";
+import "./style.css";
 
 export default class Home extends Component {
 
@@ -53,8 +54,7 @@ export default class Home extends Component {
         "http://localhost:5000/twitter/followers?user_id=" + this.props.userId
       )
       .then((response) => {
-        this.setState({ followers: response.data });
-        console.log("GET FOLLOWERS STATE", this.state)
+        this.setState({ followers: response.data});
       })
       .catch((error) => {
         console.error(error);
@@ -80,62 +80,61 @@ export default class Home extends Component {
   render() {
     return (
       <Segment placeholder basic padded>
-        <NavBar
+<NavBar
           userId={this.props.userId}
           username={this.props.username}
           logout={this.handleLogoutClick}
-        />
-        <Grid columns={2} stackable textAlign="center">
-          <Grid.Row>
-            <Segment>WELCOME {this.props.username}</Segment>
-          </Grid.Row>
-          <Grid.Row verticalAlign="middle">
-            <Grid.Column>
-              <Button
-                primary
-                color="twitter"
-                size="huge"
-              >
-                Validate Followers
-              </Button>
-            </Grid.Column>
-            <Divider vertical>Or</Divider>
-            <Grid.Column>
-              <Button
-                primary
-                color="twitter"
-                size="huge"
-              >
-                Validate Following
-              </Button>
-            </Grid.Column>
-          </Grid.Row>
+        />        
+        <Grid columns={2} className = "gridContainer" stackable textAlign="center" >
+            <Grid.Row className = "homeGrid1">
+              <Segment>WELCOME {this.props.username}</Segment>
+            </Grid.Row>
+            <Grid.Row className = "homeGrid2" verticalAlign="middle">
+              <Grid.Column>
+                <Button
+                  primary
+                  color="twitter"
+                  size="huge"
+                >
+                  Validate Followers
+                </Button>
+              </Grid.Column>
+              <Divider vertical>Or</Divider>
+              <Grid.Column>
+                <Button
+                  primary
+                  color="twitter"
+                  size="huge"
+                >
+                  Validate Following
+                </Button>
+              </Grid.Column>
+            </Grid.Row>
 
-          <Grid.Row>
+            <Grid.Row className = "homeGrid3">
             <Grid.Column>
+            <Segment vertical>
               <ListFollowers
                 followers={this.state.followers}
                 startList={this.state.startList}
                 endList={this.state.endList}
-              />
+                />
+                </Segment>
+              </Grid.Column>
 
-              
-            </Grid.Column>
-
-            <Divider></Divider>
-
+              <Divider></Divider>
             <Grid.Column>
+              <Segment vertical>
               <ListFollowing
                 followings={this.state.followings}
                 startList={this.state.startList}
                 endList={this.state.endList}
                 userId={this.props.userId}
-              />
-
-              
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+                />
+                </Segment>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
       </Segment>
     );
   }
