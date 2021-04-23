@@ -1,15 +1,22 @@
 import React, { Component } from "react";
-import { List, Image, Button, Segment, Pagination, Transition } from "semantic-ui-react";
+import {
+  List,
+  Image,
+  Button,
+  Segment,
+  Pagination,
+  Transition,
+} from "semantic-ui-react";
 import twitter_avatar from "../Images/twitter_avatar.png";
 
 export default class ListFollowers extends Component {
   constructor(props) {
     super(props);
-      this.state = {
-        isNull: false,
-        startList: 0,
-        endList: 10
-      }
+    this.state = {
+      isNull: false,
+      startList: 0,
+      endList: 10,
+    };
   }
 
   nextPage = (e, data) => {
@@ -26,15 +33,17 @@ export default class ListFollowers extends Component {
             <List.Item>
               <Image avatar src={follower.profile_image_url} />
               <List.Content
+                floated="left"
                 key={follower.id}
-                content={follower.name + " " + follower.username}
+                content={follower.name}
               />
+              <List.Content floated="right">
                 <Button size="tiny" floated="right">
                   Block
                 </Button>
-             
+              </List.Content>
 
-                <List.Content animated textAlign="center-bottom">
+              <List.Content animated textAlign="center-bottom">
                 Threat Level :
                 <Segment
                   vertical="center"
@@ -45,18 +54,17 @@ export default class ListFollowers extends Component {
               </List.Content>
             </List.Item>
           ))}
-            <Pagination
-                boundaryRange={0}
-                defaultActivePage={1}
-                ellipsisItem={null}
-                firstItem={null}
-                lastItem={null}
-                siblingRange={1}
-                totalPages={Math.round(this.props.followers.length / 10) + 1}
-                onPageChange={this.nextPage}
-              />
-        </List>
-        
+        <Pagination
+          boundaryRange={0}
+          defaultActivePage={1}
+          ellipsisItem={null}
+          firstItem={null}
+          lastItem={null}
+          siblingRange={1}
+          totalPages={Math.round(this.props.followers.length / 10) + 1}
+          onPageChange={this.nextPage}
+        />
+      </List>
     );
   }
 }

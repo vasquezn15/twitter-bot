@@ -35,10 +35,8 @@ export default class ListFollowing extends Component {
           alert(response.data.message);
           return;
         }
-        
-        this.state.followings.filter(
-          (user) => user.id !== followerId
-        );
+
+        this.state.followings.filter((user) => user.id !== followerId);
         console.log(
           "New list of followings from unfollow user",
           this.props.followings
@@ -60,17 +58,16 @@ export default class ListFollowing extends Component {
           .map((user) => (
             <List.Item>
               <Image avatar src={user.profile_image_url} />
-              <List.Content key={user.id}>
-                {user.name + " "}
-                <Button
+              <List.Content floated="left" key={user.id} content={user.name} />
+              <List.Content floated="right">
+              <Button
                   size="mini"
                   onClick={() => this.unfollowUser(user.id)}
                   floated="right"
                 >
                   Unfollow
                 </Button>
-
-                <Button size="mini" floated="right">
+                <Button size="tiny" floated="right">
                   Block
                 </Button>
               </List.Content>
