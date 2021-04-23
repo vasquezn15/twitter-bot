@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { List, Image, Button, Segment, Pagination } from "semantic-ui-react";
+import { List, Image, Button, Segment, Pagination, Transition } from "semantic-ui-react";
 import twitter_avatar from "../Images/twitter_avatar.png";
 
 export default class ListFollowers extends Component {

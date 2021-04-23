@@ -9,6 +9,7 @@ export default class ListFollowing extends Component {
       isNull: false,
       startList: 0,
       endList: 10,
+      //followings: this.props.followings
     };
   }
 
@@ -34,17 +35,22 @@ export default class ListFollowing extends Component {
           alert(response.data.message);
           return;
         }
+        
+        this.state.followings.filter(
+          (user) => user.id !== followerId
+        );
         console.log(
           "New list of followings from unfollow user",
           this.props.followings
         );
         alert(response.data.message);
-        this.props.followings = this.props.followings.filter(
-          (user) => user.id !== followerId
-        );
       })
       .catch((error) => {});
   };
+
+  renderList() {
+
+  }
 
   render() {
     return (

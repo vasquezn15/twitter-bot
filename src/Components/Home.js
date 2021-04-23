@@ -47,18 +47,6 @@ export default class Home extends Component {
     
   };
 
-  clickListToggle = (e) => {
-    
-  };
-
-  
-  
-
-  previousPage = (e) => {
-    this.currentActivePage -= 10;
-    this.previousActivePage -= 10;
-  };
-
   getFollowers = (e) => {
     axios
       .get(
@@ -107,7 +95,6 @@ export default class Home extends Component {
                 primary
                 color="twitter"
                 size="huge"
-                //onClick={this.getFollowers}
               >
                 Validate Followers
               </Button>
@@ -118,8 +105,6 @@ export default class Home extends Component {
                 primary
                 color="twitter"
                 size="huge"
-                toggle={this.state.listToggle}
-                onClick={this.clickListToggle()}
               >
                 Validate Following
               </Button>
@@ -144,6 +129,7 @@ export default class Home extends Component {
                 followings={this.state.followings}
                 startList={this.state.startList}
                 endList={this.state.endList}
+                userId={this.props.userId}
               />
 
               
