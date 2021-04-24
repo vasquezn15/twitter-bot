@@ -36,7 +36,7 @@ export default class Home extends Component {
   handlePythonButtonCLick = (e) => {
     var i =  Math.random() * this.state.followers.length;
     var userId = this.state.followers[Math.round(i)]["id"];
-    sendToPython(userId);
+    sendToPython(userId)
   }
   handleLogoutClick = () => {
     this.props.logout();

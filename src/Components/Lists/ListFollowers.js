@@ -26,12 +26,13 @@ export default class ListFollowers extends Component {
 
   render() {
     return (
-      <List animated className="followersList">
+      <div>
+      <List animated className="ui-list">
         {this.props.followers
           .slice(this.state.startList, this.state.endList)
           .map((follower) => (
             <List.Item>
-              <Image avatar src={follower.profile_image_url} />
+              <Image avatar src={follower.profile_image_url} floated='left' />
               <List.Content
                 floated="left"
                 key={follower.id}
@@ -44,6 +45,7 @@ export default class ListFollowers extends Component {
               </List.Content>
 
               <List.Content animated textAlign="center-bottom">
+              {/*This segment is what is overlapping the shade of white */}
                 Threat Level :
                 <Segment
                   vertical="center"
@@ -54,6 +56,7 @@ export default class ListFollowers extends Component {
               </List.Content>
             </List.Item>
           ))}
+                </List>
         <Pagination
           boundaryRange={0}
           defaultActivePage={1}
@@ -64,7 +67,7 @@ export default class ListFollowers extends Component {
           totalPages={Math.round(this.props.followers.length / 10) + 1}
           onPageChange={this.nextPage}
         />
-      </List>
+      </div>
     );
   }
 }

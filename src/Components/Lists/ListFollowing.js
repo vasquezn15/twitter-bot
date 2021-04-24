@@ -70,12 +70,13 @@ export default class ListFollowing extends Component {
 
   render() {
     return (
-      <List animated className="followingList">
+      <div >
+      <List animated className="followingList" className='ui-list'>
         {this.props.followings
           .slice(this.state.startList, this.state.endList)
           .map((user) => (
             <List.Item>
-              <Image avatar src={user.profile_image_url} />
+              <Image avatar src={user.profile_image_url} floated='left'/>
               <List.Content floated="left" key={user.id} content={user.name} />
               <List.Content floated="right">
               <Button
@@ -89,10 +90,13 @@ export default class ListFollowing extends Component {
                   Block
                 </Button>
               </List.Content>
+              <List.Content
+                content='Threat Level: '
+              />
               <List.Content animated textAlign="center-bottom">
-                Threat Level :
+                {/*This segment is what is overlapping the shade of white */}
                 <Segment
-                  vertical="center"
+                  vertical
                   loading={this.state.isNull ? false : true}
                 >
                   Undefined
@@ -100,17 +104,20 @@ export default class ListFollowing extends Component {
               </List.Content>
             </List.Item>
           ))}
-        <Pagination
-          boundaryRange={0}
-          defaultActivePage={1}
-          ellipsisItem={null}
-          firstItem={null}
-          lastItem={null}
-          siblingRange={1}
-          totalPages={Math.round(this.props.followings.length / 10) + 1}
-          onPageChange={this.nextPage}
-        />
+          
       </List>
+      <Pagination
+      boundaryRange={0}
+      defaultActivePage={1}
+      ellipsisItem={null}
+      firstItem={null}
+      lastItem={null}
+      siblingRange={1}
+      totalPages={Math.round(this.props.followings.length / 10) + 1}
+      onPageChange={this.nextPage}
+    />
+        </div>
+        
     );
   }
 }
