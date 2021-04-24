@@ -9,7 +9,7 @@ export default class ListFollowing extends Component {
       isNull: false,
       startList: 0,
       endList: 10,
-      //followings: this.props.followings
+      followings: this.props.followings
     };
   }
 
@@ -18,15 +18,12 @@ export default class ListFollowing extends Component {
     this.setState({ endList: datum, startList: datum - 10 });
   };
 
-  unfollowUser = (followerId) => {
-    const userId = this.props.userId;
+  blockUser = (target_user_id) => {
+    var userId = this.props.userId;
     axios.defaults.withCredentials = true;
     axios
-      .post(
-        "http://localhost:5000/twitter/unfollow?follower_id=" +
-          followerId +
-          "&user_id=" +
-          userId
+      .get(
+        "http://localhost:5000/twitter/block?target_user_id=" + target_user_id +"&user_id=" + userId
       )
       .then((response) => {
         console.log(response);
@@ -35,20 +32,41 @@ export default class ListFollowing extends Component {
           alert(response.data.message);
           return;
         }
-
-        this.state.followings.filter((user) => user.id !== followerId);
+        
+        this.setState({followings: this.state.followings.filter((user) => user.id !== target_user_id)})
         console.log(
           "New list of followings from unfollow user",
-          this.props.followings
+          this.state.followings
         );
         alert(response.data.message);
       })
       .catch((error) => {});
   };
 
-  renderList() {
-    // Change here
-  }
+  unfollowUser = (target_user_id) => {
+    var userId = this.props.userId;
+    axios.defaults.withCredentials = true;
+    axios
+      .post(
+        "http://localhost:5000/twitter/unfollow?target_user_id=" + target_user_id +"&user_id=" + userId
+      )
+      .then((response) => {
+        console.log(response);
+        if (response.data.error) {
+          // TODO: Make special alert that unfollowed failed
+          alert(response.data.message);
+          return;
+        }
+        
+        this.setState({followings: this.state.followings.filter((user) => user.id !== target_user_id)})
+        console.log(
+          "New list of followings from unfollow user",
+          this.state.followings
+        );
+        alert(response.data.message);
+      })
+      .catch((error) => {});
+  };
 
   render() {
     return (
@@ -67,7 +85,7 @@ export default class ListFollowing extends Component {
                 >
                   Unfollow
                 </Button>
-                <Button size="tiny" floated="right">
+                <Button size="tiny" floated="right" onClick={() => {this.blockUser(user.id)}}>
                   Block
                 </Button>
               </List.Content>
