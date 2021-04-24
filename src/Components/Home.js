@@ -10,8 +10,8 @@ import axios from "axios";
 import NavBar from "./NavBar";
 import ListFollowing from "./Lists/ListFollowing";
 import ListFollowers from "./Lists/ListFollowers";
-import { Redirect } from "react-router";
 import "./style.css";
+import { sendToPython } from './AICall';
 
 export default class Home extends Component {
 
@@ -33,6 +33,11 @@ export default class Home extends Component {
     this.getUsersFollowing();
   }
 
+  handlePythonButtonCLick = (e) => {
+    var i =  Math.random() * this.state.followers.length;
+    var userId = this.state.followers[Math.round(i)]["id"];
+    sendToPython(userId);
+  }
   handleLogoutClick = () => {
     this.props.logout();
     this.setState({
@@ -76,6 +81,8 @@ export default class Home extends Component {
         console.error(error);
       });
   };
+
+ 
 
   render() {
     return (
@@ -133,8 +140,14 @@ export default class Home extends Component {
                 />
                 </Segment>
               </Grid.Column>
-            </Grid.Row>
-          </Grid>
+          </Grid.Row>
+          <Grid.Row>
+            <Button size='medium' onClick={this.handlePythonButtonCLick }>
+              Send To Python
+            </Button>
+          </Grid.Row>
+        </Grid>
+        
       </Segment>
     );
   }
