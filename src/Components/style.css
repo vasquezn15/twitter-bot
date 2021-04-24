@@ -59,7 +59,7 @@ label.hide{
 .body{background-color: #1DA1F2;}
 
 .loginFormContainer{
-    background-color: white;
+    background-color: #1DA1F2;
     
 }
 
@@ -80,6 +80,7 @@ label.hide{
 
 .gridContainer{
     background-color: #1DA1F2;
+    
 }
 
 .homeGrid1{
@@ -101,9 +102,9 @@ label.hide{
     max-width: 1550px;
     
     background-color: white;
+    height:100vh;
     
 }
 
-.followingList{
-    text-align: left;
-}
+
+

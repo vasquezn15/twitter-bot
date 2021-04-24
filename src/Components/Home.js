@@ -79,8 +79,8 @@ export default class Home extends Component {
 
   render() {
     return (
-      <Segment placeholder basic padded>
-<NavBar
+      <div class = "gridMaster">
+        <NavBar
           userId={this.props.userId}
           username={this.props.username}
           logout={this.handleLogoutClick}
@@ -99,7 +99,7 @@ export default class Home extends Component {
                   Validate Followers
                 </Button>
               </Grid.Column>
-              <Divider vertical>Or</Divider>
+              
               <Grid.Column>
                 <Button
                   primary
@@ -113,7 +113,7 @@ export default class Home extends Component {
 
             <Grid.Row className = "homeGrid3">
             <Grid.Column>
-            <Segment vertical>
+            <Segment >
               <ListFollowers
                 followers={this.state.followers}
                 startList={this.state.startList}
@@ -122,9 +122,9 @@ export default class Home extends Component {
                 </Segment>
               </Grid.Column>
 
-              <Divider></Divider>
+              
             <Grid.Column>
-              <Segment vertical>
+              <Segment >
               <ListFollowing
                 followings={this.state.followings}
                 startList={this.state.startList}
@@ -135,7 +135,7 @@ export default class Home extends Component {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-      </Segment>
+      </div>
     );
   }
 }

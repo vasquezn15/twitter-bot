@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { List, Image, Button, Segment, Pagination } from "semantic-ui-react";
+import { List, Image, Button, Segment, Pagination, Loader } from "semantic-ui-react";
 import axios from "axios";
 
 export default class ListFollowing extends Component {
@@ -57,13 +57,19 @@ export default class ListFollowing extends Component {
           .slice(this.state.startList, this.state.endList)
           .map((user) => (
             <List.Item>
-              <Image avatar src={user.profile_image_url} />
-              <List.Content floated="left" key={user.id} content={user.name} />
+              <Image avatar src={user.profile_image_url} floated ='left' />
+              <List.Content 
+                floated="left" 
+                key={user.id} 
+                content={user.name} 
+              />
+              
               <List.Content floated="right">
-              <Button
-                  size="mini"
-                  onClick={() => this.unfollowUser(user.id)}
+                <Button
                   floated="right"
+                  size="tiny"
+                  onClick={() => this.unfollowUser(user.id)}
+                  
                 >
                   Unfollow
                 </Button>
@@ -71,14 +77,9 @@ export default class ListFollowing extends Component {
                   Block
                 </Button>
               </List.Content>
-              <List.Content animated textAlign="center-bottom">
-                Threat Level :
-                <Segment
-                  vertical="center"
-                  loading={this.state.isNull ? false : true}
-                >
-                  Undefined
-                </Segment>
+              <List.Content animated>
+                Threat Level: &ensp;
+                <Loader active size='tiny' inline = 'center'> </Loader>
               </List.Content>
             </List.Item>
           ))}
