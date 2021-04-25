@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { List, Image, Button, Segment, Pagination } from "semantic-ui-react";
+import { List, Image, Button, Segment, Pagination, Loader } from "semantic-ui-react";
 import axios from "axios";
 
 export default class ListFollowing extends Component {
@@ -51,17 +51,15 @@ export default class ListFollowing extends Component {
                   Block
                 </Button>
               </List.Content>
+<<<<<<< HEAD
               <List.Content
                 content='Bot or Not: '
               />
+=======
+>>>>>>> f1611f1fb8d3153d81ae94b25d797174de06423a
               <List.Content animated textAlign="center-bottom">
-                {/*This segment is what is overlapping the shade of white */}
-                <Segment
-                  vertical
-                  loading={this.state.isNull ? false : true}
-                >
-                  Undefined
-                </Segment>
+                Threat Level
+                <Loader active size = 'tiny' inline = 'center'/>
               </List.Content>
             </List.Item>
           ))}
