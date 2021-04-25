@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { List, Image, Button, Segment, Pagination } from "semantic-ui-react";
+import { List, Image, Button, Segment, Pagination, Loader } from "semantic-ui-react";
 import axios from "axios";
 
 export default class ListFollowing extends Component {
@@ -90,17 +90,9 @@ export default class ListFollowing extends Component {
                   Block
                 </Button>
               </List.Content>
-              <List.Content
-                content='Threat Level: '
-              />
               <List.Content animated textAlign="center-bottom">
-                {/*This segment is what is overlapping the shade of white */}
-                <Segment
-                  vertical
-                  loading={this.state.isNull ? false : true}
-                >
-                  Undefined
-                </Segment>
+                Threat Level
+                <Loader active size = 'tiny' inline = 'center'/>
               </List.Content>
             </List.Item>
           ))}

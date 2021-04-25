@@ -53,8 +53,9 @@ label.hide {
   background-color: #1da1f2;
 }
 
-.loginFormContainer {
-  background-color: white;
+.loginFormContainer{
+    background-color: #1DA1F2;
+    
 }
 
 .loginForm {
@@ -72,8 +73,9 @@ label.hide {
 
 /* Home.js CSS */
 
-.gridContainer {
-  background-color: #1da1f2;
+.gridContainer{
+    background-color: #1DA1F2;
+    
 }
 
 .homeGrid1 {
@@ -89,17 +91,20 @@ label.hide {
   background-color: white;
 }
 
-.homeGrid3 {
-  max-width: 1550px;
 
-  background-color: white;
+.homeGrid3{
+    max-width: 1550px;
+    
+    background-color: white;
+    
+    
 }
 
-.followingList {
-  text-align: left;
+.SendToPython{
+    background-color: white;
+    max-width: 1550px;
+    height: 50vh;
 }
 
-.ui-list {
-  height: 500px;
-  overflow: scroll;
-}
+
+
