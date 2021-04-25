@@ -22,54 +22,11 @@ export default class ListFollowing extends Component {
   };
 
   blockUser = (target_user_id) => {
-    var userId = this.props.userId;
-    axios.defaults.withCredentials = true;
-    axios
-      .get(
-        "http://localhost:5000/twitter/block?target_user_id=" + target_user_id +"&user_id=" + userId
-      )
-      .then((response) => {
-        console.log(response);
-        if (response.data.error) {
-          // TODO: Make special alert that unfollowed failed
-          alert(response.data.message);
-          return;
-        }
-        
-        this.setState({followings: this.state.followings.filter((user) => user.id !== target_user_id)})
-        console.log(
-          "New list of followings from unfollow user",
-          this.state.followings
-        );
-        alert(response.data.message);
-      })
-      .catch((error) => {});
-  };
+    this.props.blockUser(target_user_id);
+ };
 
   unfollowUser = (target_user_id) => {
     this.props.unfollowUser(target_user_id);
-    // var userId = this.props.userId;
-    // axios.defaults.withCredentials = true;
-    // axios
-    //   .post(
-    //     "http://localhost:5000/twitter/unfollow?target_user_id=" + target_user_id +"&user_id=" + userId
-    //   )
-    //   .then((response) => {
-    //     console.log(response);
-    //     if (response.data.error) {
-    //       // TODO: Make special alert that unfollowed failed
-    //       alert(response.data.message);
-    //       return;
-    //     }
-        
-    //     this.setState({followings: this.state.followings.filter((user) => user.id !== target_user_id)})
-    //     console.log(
-    //       "New list of followings from unfollow user",
-    //       this.state.followings
-    //     );
-    //     alert(response.data.message);
-    //   })
-    //   .catch((error) => {});
   };
 
   render() {
@@ -95,7 +52,7 @@ export default class ListFollowing extends Component {
                 </Button>
               </List.Content>
               <List.Content
-                content='Threat Level: '
+                content='Bot or Not: '
               />
               <List.Content animated textAlign="center-bottom">
                 {/*This segment is what is overlapping the shade of white */}

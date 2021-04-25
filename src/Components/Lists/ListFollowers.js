@@ -24,29 +24,33 @@ export default class ListFollowers extends Component {
     this.setState({ endList: datum, startList: datum - 10 });
   };
 
+  blockUser = (target_user_id) => {
+    this.props.blockUser(target_user_id);
+ };
+
   render() {
     return (
       <div>
       <List animated className="ui-list">
         {this.props.followers
           .slice(this.state.startList, this.state.endList)
-          .map((follower) => (
+          .map((user) => (
             <List.Item>
-              <Image avatar src={follower.profile_image_url} floated='left' />
+              <Image avatar src={user.profile_image_url} floated='left' />
               <List.Content
                 floated="left"
-                key={follower.id}
-                content={follower.name}
+                key={user.id}
+                content={user.name}
               />
               <List.Content floated="right">
-                <Button size="tiny" floated="right">
+                <Button size="tiny" floated="right" onClick={() => { this.blockUser(user.id) }}>
                   Block
                 </Button>
               </List.Content>
 
               <List.Content animated textAlign="center-bottom">
               {/*This segment is what is overlapping the shade of white */}
-                Threat Level :
+                Bot or Not :
                 <Segment
                   vertical="center"
                   loading={this.state.isNull ? false : true}
