@@ -51,12 +51,9 @@ export default class ListFollowing extends Component {
                   Block
                 </Button>
               </List.Content>
-<<<<<<< HEAD
               <List.Content
                 content='Bot or Not: '
               />
-=======
->>>>>>> f1611f1fb8d3153d81ae94b25d797174de06423a
               <List.Content animated textAlign="center-bottom">
                 Threat Level
                 <Loader active size = 'tiny' inline = 'center'/>

@@ -5,12 +5,8 @@ import NavBar from "./NavBar";
 import ListFollowing from "./Lists/ListFollowing";
 import ListFollowers from "./Lists/ListFollowers";
 import "./style.css";
-<<<<<<< HEAD
-import { sendToPython } from "./AICall";
-=======
 import { sendToPython } from './AICall';
 import { getQueriesForElement } from "@testing-library/dom";
->>>>>>> f1611f1fb8d3153d81ae94b25d797174de06423a
 
 export default class Home extends Component {
   constructor(props) {
@@ -140,40 +136,11 @@ export default class Home extends Component {
 
   render() {
     return (
-<<<<<<< HEAD
-      <Segment placeholder basic padded>
-=======
       <div class = "gridMaster">
->>>>>>> f1611f1fb8d3153d81ae94b25d797174de06423a
         <NavBar
           userId={this.props.userId}
           username={this.props.username}
           logout={this.handleLogoutClick}
-<<<<<<< HEAD
-        />
-        <Grid
-          columns={2}
-          className="gridContainer"
-          stackable
-          textAlign="center"
-        >
-          <Grid.Row className="homeGrid1">
-            <Segment>WELCOME {this.props.username}</Segment>
-          </Grid.Row>
-          <Grid.Row className="homeGrid2" verticalAlign="middle">
-            <Grid.Column>
-              <Button primary color="twitter" size="huge">
-                Validate Followers
-              </Button>
-            </Grid.Column>
-            <Divider vertical>Or</Divider>
-            <Grid.Column>
-              <Button primary color="twitter" size="huge">
-                Validate Following
-              </Button>
-            </Grid.Column>
-          </Grid.Row>
-=======
         />        
         <Grid columns={2} className = "gridContainer" stackable textAlign="center" >
             <Grid.Row className = "homeGrid1">
@@ -200,19 +167,12 @@ export default class Home extends Component {
                 </Button>
               </Grid.Column>
             </Grid.Row>
->>>>>>> f1611f1fb8d3153d81ae94b25d797174de06423a
 
           <Grid.Row className="homeGrid3">
             <Grid.Column>
-<<<<<<< HEAD
-              <Segment vertical>
-                <ListFollowers
-                  followers={this.state.followers}
-=======
             <Segment >
               <ListFollowers
                 followers={this.state.followers}
->>>>>>> f1611f1fb8d3153d81ae94b25d797174de06423a
                   startList={this.state.startList}
                   endList={this.state.endList}
                   blockUser={this.blockUser}
@@ -220,15 +180,6 @@ export default class Home extends Component {
               </Segment>
             </Grid.Column>
 
-<<<<<<< HEAD
-            <Divider></Divider>
-            <Grid.Column>
-              <Segment vertical>
-                <ListFollowing
-                  followings={this.state.followings}
-                  startList={this.state.startList}
-                  endList={this.state.endList}
-=======
               
             <Grid.Column>
               <Segment >
@@ -236,23 +187,12 @@ export default class Home extends Component {
                 followings={this.state.followings}
                 startList={this.state.startList}
                 endList={this.state.endList}
-                  userId={this.props.userId}
->>>>>>> f1611f1fb8d3153d81ae94b25d797174de06423a
                   unfollowUser={this.unfollowUser}
                   blockUser={this.blockUser}
                 />
               </Segment>
             </Grid.Column>
           </Grid.Row>
-<<<<<<< HEAD
-          <Grid.Row>
-            <Button size="medium" onClick={this.handlePythonButtonCLick}>
-              Send To Python
-            </Button>
-          </Grid.Row>
-        </Grid>
-      </Segment>
-=======
           <Grid.Row className = "SendToPython">
             <Grid.Column>
               <Button size='medium' onClick={this.handlePythonButtonCLick }>
@@ -263,7 +203,6 @@ export default class Home extends Component {
         </Grid>
         
       </div>
->>>>>>> f1611f1fb8d3153d81ae94b25d797174de06423a
     );
   }
 }

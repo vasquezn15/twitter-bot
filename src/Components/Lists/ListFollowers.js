@@ -37,21 +37,11 @@ export default class ListFollowers extends Component {
           .slice(this.state.startList, this.state.endList)
           .map((user) => (
             <List.Item>
-<<<<<<< HEAD
               <Image avatar src={user.profile_image_url} floated='left' />
               <List.Content
                 floated="left"
                 key={user.id}
                 content={user.name}
-=======
-              <Image avatar src={follower.profile_image_url}  floated = 'left'/>
-              <List.Content
-                floated='left'
-                key={follower.id}
-                content={follower.name}
-
-                
->>>>>>> f1611f1fb8d3153d81ae94b25d797174de06423a
               />
               <List.Content floated="right">
                 <Button size="tiny" floated="right" onClick={() => { this.blockUser(user.id) }}>
@@ -59,21 +49,9 @@ export default class ListFollowers extends Component {
                 </Button>
               </List.Content>
 
-<<<<<<< HEAD
-              <List.Content animated textAlign="center-bottom">
-              {/*This segment is what is overlapping the shade of white */}
-                Bot or Not :
-                <Segment
-                  vertical="center"
-                  loading={this.state.isNull ? false : true}
-                >
-                  Undefined
-                </Segment>
-=======
               <List.Content animated>
                 Threat Level: &ensp;
                 <Loader active size= 'tiny' inline = 'center'/>
->>>>>>> f1611f1fb8d3153d81ae94b25d797174de06423a
               </List.Content>
             </List.Item>
           ))}
