@@ -53,6 +53,27 @@ export default class Home extends Component {
     
   };
 
+  unfollowUser = (target_user_id) => {
+    var userId = this.props.userId;
+    axios.defaults.withCredentials = true;
+    axios
+      .post(
+        "http://localhost:5000/twitter/unfollow?target_user_id=" + target_user_id +"&user_id=" + userId
+      )
+      .then((response) => {
+        console.log(response);
+        if (response.data.error) {
+          // TODO: Make special alert that unfollowed failed
+          alert(response.data.message);
+          return;
+        }
+        
+        this.setState({followings: this.state.followings.filter((user) => user.id !== target_user_id)})
+        alert(response.data.message);
+      })
+      .catch((error) => {});
+  }
+
   getFollowers = (e) => {
     axios
       .get(
@@ -123,7 +144,7 @@ export default class Home extends Component {
             <Segment vertical>
               <ListFollowers
                 followers={this.state.followers}
-                startList={this.state.startList}
+                  startList={this.state.startList}
                 endList={this.state.endList}
                 />
                 </Segment>
@@ -136,7 +157,8 @@ export default class Home extends Component {
                 followings={this.state.followings}
                 startList={this.state.startList}
                 endList={this.state.endList}
-                userId={this.props.userId}
+                  userId={this.props.userId}
+                  unfollowUser={this.unfollowUser}
                 />
                 </Segment>
               </Grid.Column>
