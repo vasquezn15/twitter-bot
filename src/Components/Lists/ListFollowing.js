@@ -9,10 +9,13 @@ export default class ListFollowing extends Component {
       isNull: false,
       startList: 0,
       endList: 10,
-      followings: this.props.followings
+      followings: []
     };
   }
 
+  componentDidMount() {
+    this.setState({followings: this.props.followings})
+  }
   nextPage = (e, data) => {
     var datum = data.activePage * 10;
     this.setState({ endList: datum, startList: datum - 10 });
@@ -44,28 +47,29 @@ export default class ListFollowing extends Component {
   };
 
   unfollowUser = (target_user_id) => {
-    var userId = this.props.userId;
-    axios.defaults.withCredentials = true;
-    axios
-      .post(
-        "http://localhost:5000/twitter/unfollow?target_user_id=" + target_user_id +"&user_id=" + userId
-      )
-      .then((response) => {
-        console.log(response);
-        if (response.data.error) {
-          // TODO: Make special alert that unfollowed failed
-          alert(response.data.message);
-          return;
-        }
+    this.props.unfollowUser(target_user_id);
+    // var userId = this.props.userId;
+    // axios.defaults.withCredentials = true;
+    // axios
+    //   .post(
+    //     "http://localhost:5000/twitter/unfollow?target_user_id=" + target_user_id +"&user_id=" + userId
+    //   )
+    //   .then((response) => {
+    //     console.log(response);
+    //     if (response.data.error) {
+    //       // TODO: Make special alert that unfollowed failed
+    //       alert(response.data.message);
+    //       return;
+    //     }
         
-        this.setState({followings: this.state.followings.filter((user) => user.id !== target_user_id)})
-        console.log(
-          "New list of followings from unfollow user",
-          this.state.followings
-        );
-        alert(response.data.message);
-      })
-      .catch((error) => {});
+    //     this.setState({followings: this.state.followings.filter((user) => user.id !== target_user_id)})
+    //     console.log(
+    //       "New list of followings from unfollow user",
+    //       this.state.followings
+    //     );
+    //     alert(response.data.message);
+    //   })
+    //   .catch((error) => {});
   };
 
   render() {
