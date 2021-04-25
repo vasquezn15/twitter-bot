@@ -31,7 +31,7 @@ export default class About extends Component{
                             well as the ability to unfollow or unblock them.
                         </p>           
                         <p>
-                            his web tool is intended for those who are concerned about their privacy, security, or peace of mind regarding the
+                            This web tool is intended for those who are concerned about their privacy, security, or peace of mind regarding the
                             presence of bots on Twitter.
                         </p>
                     </div>
