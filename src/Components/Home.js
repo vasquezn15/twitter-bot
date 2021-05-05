@@ -5,8 +5,7 @@ import NavBar from "./NavBar";
 import ListFollowing from "./Lists/ListFollowing";
 import ListFollowers from "./Lists/ListFollowers";
 import "./style.css";
-import { sendToPython } from './AICall';
-import { getQueriesForElement } from "@testing-library/dom";
+import { sendToPython } from "./AICall";
 
 export default class Home extends Component {
   constructor(props) {
@@ -23,8 +22,26 @@ export default class Home extends Component {
   }
 
   componentDidMount() {
-    this.getFollowers();
-    this.getUsersFollowing();
+    this.setState(
+      (prevState) => ({
+        followings: prevState.followings,
+        followers: prevState.followers,
+      }),
+      () => console.log("state followings", this.state.followings)
+    );
+
+    // this.getUsersFollowing();
+    // this.getFollowers();
+    console.log("component did mount");
+  }
+
+  async loadBotorNot(userId) {
+    try {
+      var isBotorNot = await sendToPython(userId);
+      return isBotorNot;
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   handlePythonButtonCLick = (e) => {
@@ -57,7 +74,6 @@ export default class Home extends Component {
           userId
       )
       .then((response) => {
-        console.log(response);
         if (response.data.error) {
           // TODO: Make special alert that unfollowed failed
           alert(response.data.message);
@@ -70,7 +86,7 @@ export default class Home extends Component {
           ),
           followers: this.state.followers.filter(
             (user) => user.id !== target_user_id
-          )
+          ),
         });
         alert(response.data.message);
       })
@@ -105,13 +121,20 @@ export default class Home extends Component {
       .catch((error) => {});
   };
 
-  getFollowers = (e) => {
+  getFollowers = () => {
     axios
       .get(
         "http://localhost:5000/twitter/followers?user_id=" + this.props.userId
       )
       .then((response) => {
-        this.setState({ followers: response.data });
+        this.setState({ followers: response.data }, async () => {
+          var followers = [...this.state.followers]; // make a copy to not polute the state
+
+          followers.forEach(async (follower, index) => {
+            followers[index].isBot = await this.loadBotorNot(follower.id);
+          });
+          this.setState({ followers: followers });
+        });
       })
       .catch((error) => {
         console.error(error);
@@ -124,55 +147,70 @@ export default class Home extends Component {
         "http://localhost:5000/twitter/following?user_id=" + this.props.userId
       )
       .then((response) => {
-        if (response == null) {
-          throw new Error("No one is following you");
-        }
-        this.setState({ followings: response.data.data });
+        this.setState({ followings: response.data.data }, async () => {
+          var followings = [...this.state.followings]; // make a copy to not polute the state
+
+          followings.forEach(async (user, index) => {
+            followings[index].isBot = await this.loadBotorNot(user.id);
+          });
+          this.setState({ followings: followings });
+        });
       })
       .catch((error) => {
-        console.error(error);
+        console.error("error at getting users following", error);
       });
   };
 
   render() {
     return (
-      <div class = "gridMaster">
+      <div class="gridMaster">
         <NavBar
           userId={this.props.userId}
           username={this.props.username}
           logout={this.handleLogoutClick}
-        />        
-        <Grid columns={2} className = "gridContainer" stackable textAlign="center" >
-            <Grid.Row className = "homeGrid1">
-              <Segment>WELCOME {this.props.username}</Segment>
-            </Grid.Row>
-            <Grid.Row className = "homeGrid2" verticalAlign="middle">
-              <Grid.Column>
-                <Button
-                  primary
-                  color="twitter"
-                  size="huge"
-                >
-                  Validate Followers
-                </Button>
-              </Grid.Column>
-              
-              <Grid.Column>
-                <Button
-                  primary
-                  color="twitter"
-                  size="huge"
-                >
-                  Validate Following
-                </Button>
-              </Grid.Column>
-            </Grid.Row>
+        />
+        <Grid
+          columns={2}
+          className="gridContainer"
+          stackable
+          textAlign="center"
+        >
+          <Grid.Row className="homeGrid1">
+            <Segment>WELCOME {this.props.username}</Segment>
+          </Grid.Row>
+          <Grid.Row className="homeGrid2" verticalAlign="middle">
+            <Grid.Column>
+              <Button
+                primary
+                color="twitter"
+                size="huge"
+                onClick={() => {
+                  this.getFollowers();
+                }}
+              >
+                Validate Followers
+              </Button>
+            </Grid.Column>
+
+            <Grid.Column>
+              <Button
+                primary
+                color="twitter"
+                size="huge"
+                onClick={() => {
+                  this.getUsersFollowing();
+                }}
+              >
+                Validate Following
+              </Button>
+            </Grid.Column>
+          </Grid.Row>
 
           <Grid.Row className="homeGrid3">
             <Grid.Column>
-            <Segment >
-              <ListFollowers
-                followers={this.state.followers}
+              <Segment>
+                <ListFollowers
+                  followers={this.state.followers}
                   startList={this.state.startList}
                   endList={this.state.endList}
                   blockUser={this.blockUser}
@@ -180,28 +218,27 @@ export default class Home extends Component {
               </Segment>
             </Grid.Column>
 
-              
             <Grid.Column>
-              <Segment >
-              <ListFollowing
-                followings={this.state.followings}
-                startList={this.state.startList}
-                endList={this.state.endList}
+              <Segment>
+                <ListFollowing
+                  followings={this.state.followings}
+                  startList={this.state.startList}
+                  endList={this.state.endList}
                   unfollowUser={this.unfollowUser}
                   blockUser={this.blockUser}
+                  loadBotorNot={this.loadBotorNot}
                 />
               </Segment>
             </Grid.Column>
           </Grid.Row>
-          <Grid.Row className = "SendToPython">
+
+          <Grid.Row>
             <Grid.Column>
-              <Button size='medium' onClick={this.handlePythonButtonCLick }>
-                Send To Python
-              </Button>
-            </Grid.Column>  
+              <Segment>Summary of Results</Segment>
+            </Grid.Column>
+            <Grid.Column>This is where the results go</Grid.Column>
           </Grid.Row>
         </Grid>
-        
       </div>
     );
   }

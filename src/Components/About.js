@@ -4,11 +4,16 @@ import Navbar from './NavBar';
 import './style.css'
 
 export default class About extends Component{
-    state = {activeIndex: 0}
+    constructor(props) {
+        super(props);
+        this.state = {
+            activeIndex: 0
+        };
+      }
 
     handleClick = (e, titleProps) => {
         const {index} = titleProps
-        const{activeIndex} = this.state
+        const{activeIndex} = this.state.activeIndex
         const newIndex = activeIndex ===index ? -1 : index
 
         this.setState({activeIndex: newIndex})
