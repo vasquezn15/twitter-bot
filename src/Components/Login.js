@@ -1,66 +1,81 @@
-import React, { useState } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useParams
-} from "react-router-dom";
-import { Form, Button, Segment, Icon, Grid, Divider, Checkbox } from 'semantic-ui-react';
-import twitterImage from './Images/twitter_signin.png';
-import './style.css'
-const axios = require('axios');
+import React, { Component } from "react";
+import { Button, Menu, Header, Segment } from "semantic-ui-react";
+import "./style.css";
+import Navbar from "./NavBar";
+import ReCAPTCHA from "react-google-recaptcha";
 
-const LoginForm = () => {
+const TEST_SITE_KEY = "6Lduq8caAAAAABnRwGxGEP2yMj-9JHYDaj371iMU";
+const DELAY = 1500;
 
-    const [credentials, setCredentials] = useState({
-        username: ""
-      });
-    
-      const handleUsername = (event, data) =>{
-        setCredentials({type: data.value})
-      }
-    
-    
-      const handleLogin = (e) => {
-        axios.get("http://localhost:5001/auth/twitter");
-      }
-    
-      const handleSubmit = (e) => {
-      }
+export default class LoginForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: "[empty]",
+      load: false,
+      expired: false,
+      disabled: true,
+    };
+    this._reCaptchaRef = React.createRef();
+  }
 
-    return(
-        <div class = "loginForm">
-            <Segment placeholder  basic padded>
-                <Grid columns = {2} stackable textAlign ="center">
-                    <Divider vertical>Or</Divider>
-                    <Grid.Row verticalAlign = "middle">
-                        <Grid.Column>
-                            
-                                <Form>
-                                    <Form.Field>
-                                        <label placeholder= "@example">Enter your Twitter Handle</label>
-                                        <input placeholder= "@example"  />
-                                    </Form.Field>
-                                    <Form.Field>
-                                        <Checkbox radio label = "Check your followers"/>
-                                        <Checkbox radio label = "Check who you follow"/>
-                                    </Form.Field>
-                                    <Button primary size = "big">Check your Account</Button>
-                                </Form>
-                            
-                        </Grid.Column>
-                        <Grid.Column>
-                                <Button primary color = "twitter" size ="huge" onClick = {handleLogin}> 
-                                <Icon name = 'twitter' />
-                                Login with Twitter</Button>
-                        </Grid.Column>    
-                    </Grid.Row>
-                </Grid>    
-            </Segment>
-            
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({ load: true });
+    }, DELAY);
+  }
+
+  handleChange = (value) => {
+    this.setState({ value, disabled: false });
+    // if value is null recaptcha expired
+    if (value === null) this.setState({ expired: true });
+  };
+
+  asyncScriptOnLoad = () => {
+    this.setState({ callback: true });
+  };
+
+  render() {
+    return (
+      <body class="body">
+        <Navbar />
+        <div class="loginFormContainer">
+          <div class="loginForm">
+            <h2> Welcome to the Twitter Bot Detection Tool</h2>
+            <div class="LoginFormParagraphs">
+              <p>
+                This tool uses Artificial Intelligence to detect detect which
+                accounts that follow you and the accounts that you follow are
+                fake (bots). To learn more, click on the About tab at the top.
+              </p>
+              <p>
+                To get started, log into twitter by clicking the button below!
+              </p>
+            </div>
+
+            {/* captcha challenge: placeholder */}
+            <ReCAPTCHA
+              style={{ display: "inline-block" }}
+              theme="dark"
+              ref={this._reCaptchaRef}
+              sitekey={TEST_SITE_KEY}
+              onChange={this.handleChange}
+              asyncScriptOnLoad={this.asyncScriptOnLoad}
+            />
+
+            <div class="TwitterLoginButton">
+              <Button
+                primary
+                color="twitter"
+                href="http://localhost:5000/twitter/authoriz"
+                icon="twitter"
+                content="Login with Twitter"
+                disabled={this.state.disabled}
+              />
+            </div>
+          </div>
         </div>
-    )
+      </body>
+    );
+  }
 }
-
-export default LoginForm

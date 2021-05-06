@@ -1,49 +1,64 @@
+  
 import React, { Component } from "react";
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useParams,
-  NavLink
+  NavLink, useHistory
 } from "react-router-dom";
-import {Menu, Segment} from 'semantic-ui-react';
-import { Dropdown } from "bootstrap";
-import twitterImage from './Images/twitter_signin.png';
-import './style.css'
+import { Menu, Segment, Button } from "semantic-ui-react";
+import "./style.css";
 
-
-
-export default class Navigation extends Component{
-    state = {}
-    itemClick = (e, {name}) => this.setState({activeItem: name})
+function NavBar(props) {
+  let history = useHistory();
     
-    render() {
-        const {activeItem} = this.state
+  const handleLogoutClick = () => {
+    history.push('/');
+    props.logout();
+  }
+  
 
-        return(
-            <div class = "navbar">
-                <Segment inverted>
-                    <Menu inverted pointing secondary widths ="2">
-                        <Menu.Item 
-                            as = {NavLink} exact to = "/"
-                            name = 'home'
-                            active = {activeItem === 'home'}
-                            onClick = {this.itemClick}
-                        />
-                        
-                        <Menu.Item
-                            as = {NavLink} exact to = "/About"
-                            name = 'about'
-                            active = {activeItem === 'about'}
-                            onClick = {this.itemClick} 
-                        />
-
-                    </Menu>
-                </Segment>    
-            </div>
-
-        )
+    let button;
+    if (props.userId) {
+      button = (
+        <Button
+          primary
+          color="twitter"
+          onClick={handleLogoutClick}
+          icon="twitter"
+          content="Logout"
+        />
+      );
+    } else {
+      button = (
+        <Menu.Item
+          name='Please Login'
+        />
+      );
     }
+
+    return (
+      <div class="navbar">
+        <Segment inverted>
+          <Menu inverted secondary>
+            <Menu.Item header>Twitter Bot Detection Web Tool</Menu.Item>
+            <Menu.Item
+              as={NavLink}
+              exact
+              to="/"
+              name="home"
+            />
+
+            <Menu.Item
+              as={NavLink}
+              exact
+              to="/About"
+              name="about"
+            />
+            <Menu.Item
+              content={button}
+            />
+          </Menu>
+        </Segment>
+      </div>
+    );
 }
 
+export default NavBar;

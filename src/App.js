@@ -1,36 +1,48 @@
-import './App.css';
-import {React} from "react";
+import "./App.css";
+import { React, useState } from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Redirect,
 } from "react-router-dom";
-import Home from './Components/Home';
-import About from './Components/About';
-import Navbar from './Components/NavBar';
+import Home from "./Components/Home";
+import About from "./Components/About";
+import LoginForm from "./Components/Login";
 
 function App() {
+  const getQueryParam = (paramName) => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    return urlParams.get(paramName);
+  };
 
-  <Link to='./Components/Home'>
-    
-  </Link>
+  const [userId, setUserId] = useState(getQueryParam("user_id"));
+  const [username, setUsername] = useState(getQueryParam("username"));
 
-  return (
-      <Router>
-        <Switch>
-          <Route exact path='/'>
-              <Home />
-          </Route>
-          <Route exact path = '/about'>
-              <About />
-          </Route>
-          <Route path='/auth'>
-              
-          </Route>
-        </Switch>
-      </Router>
-    );
+  function logout() {
+    setUserId(null);
+    setUsername(null);
   }
+  return (
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          {!userId ? <LoginForm /> : <Redirect push to="/home" />}
+        </Route>
+        <Route path="/home">
+          {userId ? (
+            <Home userId={userId} username={username} logout={logout} />
+          ) : (
+            <LoginForm />
+          )}
+        </Route>
+        <Route exact path="/about">
+          <About />
+        </Route>
+      </Switch>
+    </Router>
+  );
+}
 
 export default App;

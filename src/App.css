@@ -28,6 +28,10 @@
   color: #61dafb;
 }
 
+.followingList {
+  size: 1000px;
+}
+
 @keyframes navbar-logo-spin {
   from {
     transform: rotate(0deg);
