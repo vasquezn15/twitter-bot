@@ -23,12 +23,6 @@ export default class ListFollowing extends Component {
 
   componentDidMount() {
     this.setState({ followings: this.props.followings });
-    this.setState(
-      (prevState) => ({
-        followings: prevState.followings,
-      }),
-      () => console.log("state followings", this.state.followings)
-    );
     console.log(`listfollowing cdmount state`, this.state);
   }
 
@@ -63,7 +57,7 @@ export default class ListFollowing extends Component {
           <List.Content floated="left" key={user.id} content={user.username} />
           <List.Content floated="right">
             <Button
-              size="mini"
+              size="tiny"
               onClick={() => this.unfollowUser(user.id)}
               floated="right"
             >
