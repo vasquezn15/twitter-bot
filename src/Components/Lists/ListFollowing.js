@@ -57,7 +57,7 @@ export default class ListFollowing extends Component {
           <List.Content floated="left" key={user.id} content={user.username} />
           <List.Content floated="right">
             <Button
-              size="mini"
+              size="tiny"
               onClick={() => this.unfollowUser(user.id)}
               floated="right"
             >

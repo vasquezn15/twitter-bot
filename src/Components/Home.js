@@ -30,18 +30,10 @@ export default class Home extends Component {
       }),
       () => console.log("state followings", this.state.followings)
     );
-  }
 
-  componentWillUnmount() {
-    // this.setState({
-    //   followers: [],
-    //   followings: [],
-    //   nextToken: "",
-    //   previousToken: "",
-    //   startList: 0,
-    //   endList: 10,
-    //   listToggle: true,
-    // });
+    // this.getUsersFollowing();
+    // this.getFollowers();
+    console.log("component did mount");
   }
 
   async loadBotorNot(userId) {
@@ -58,6 +50,11 @@ export default class Home extends Component {
     }
   }
 
+  handlePythonButtonCLick = (e) => {
+    var i = Math.random() * this.state.followers.length;
+    var userId = this.state.followers[Math.round(i)]["id"];
+    sendToPython(userId);
+  };
   handleLogoutClick = () => {
     this.props.logout();
     this.setState({
@@ -142,8 +139,7 @@ export default class Home extends Component {
           followers.forEach(async (follower, index) => {
             followers[index].isBot = await this.loadBotorNot(follower.id);
           });
-          this.setState({ followers });
-          console.log("state from getFollowers", this.state);
+          this.setState({ followers: followers });
         });
       })
       .catch((error) => {
@@ -163,8 +159,7 @@ export default class Home extends Component {
           followings.forEach(async (user, index) => {
             followings[index].isBot = await this.loadBotorNot(user.id);
           });
-          this.setState({ followings });
-          console.log("state from getUsersFollowing", this.state);
+          this.setState({ followings: followings });
         });
       })
       .catch((error) => {
@@ -243,12 +238,15 @@ export default class Home extends Component {
             </Grid.Column>
           </Grid.Row>
 
-          <Grid.Row>
+          <Grid.Row className="homeGrid4">
             <Grid.Column>
               <Segment>Summary of Results</Segment>
             </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row className="homeGrid5">
             <Grid.Column>
-              <Segment>Total Number of BOTS: {this.state.numOfBots}</Segment>
+              <p>This is where the results go</p>
             </Grid.Column>
           </Grid.Row>
         </Grid>
