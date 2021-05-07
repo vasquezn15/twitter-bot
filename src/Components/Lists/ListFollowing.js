@@ -23,12 +23,6 @@ export default class ListFollowing extends Component {
 
   componentDidMount() {
     this.setState({ followings: this.props.followings });
-    this.setState(
-      (prevState) => ({
-        followings: prevState.followings,
-      }),
-      () => console.log("state followings", this.state.followings)
-    );
     console.log(`listfollowing cdmount state`, this.state);
   }
 

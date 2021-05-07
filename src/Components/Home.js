@@ -18,6 +18,7 @@ export default class Home extends Component {
       startList: 0,
       endList: 10,
       listToggle: true,
+      numOfBots: 0,
     };
   }
 
@@ -29,26 +30,34 @@ export default class Home extends Component {
       }),
       () => console.log("state followings", this.state.followings)
     );
+  }
 
-    // this.getUsersFollowing();
-    // this.getFollowers();
-    console.log("component did mount");
+  componentWillUnmount() {
+    // this.setState({
+    //   followers: [],
+    //   followings: [],
+    //   nextToken: "",
+    //   previousToken: "",
+    //   startList: 0,
+    //   endList: 10,
+    //   listToggle: true,
+    // });
   }
 
   async loadBotorNot(userId) {
+    var numOfBots = this.state.numOfBots;
     try {
       var isBotorNot = await sendToPython(userId);
+      if ((await isBotorNot) == 0) {
+        numOfBots++;
+      }
+      this.setState({ numOfBots });
       return isBotorNot;
     } catch (error) {
       console.error(error);
     }
   }
 
-  handlePythonButtonCLick = (e) => {
-    var i = Math.random() * this.state.followers.length;
-    var userId = this.state.followers[Math.round(i)]["id"];
-    sendToPython(userId);
-  };
   handleLogoutClick = () => {
     this.props.logout();
     this.setState({
@@ -133,7 +142,8 @@ export default class Home extends Component {
           followers.forEach(async (follower, index) => {
             followers[index].isBot = await this.loadBotorNot(follower.id);
           });
-          this.setState({ followers: followers });
+          this.setState({ followers });
+          console.log("state from getFollowers", this.state);
         });
       })
       .catch((error) => {
@@ -153,7 +163,8 @@ export default class Home extends Component {
           followings.forEach(async (user, index) => {
             followings[index].isBot = await this.loadBotorNot(user.id);
           });
-          this.setState({ followings: followings });
+          this.setState({ followings });
+          console.log("state from getUsersFollowing", this.state);
         });
       })
       .catch((error) => {
@@ -236,7 +247,9 @@ export default class Home extends Component {
             <Grid.Column>
               <Segment>Summary of Results</Segment>
             </Grid.Column>
-            <Grid.Column>This is where the results go</Grid.Column>
+            <Grid.Column>
+              <Segment>Total Number of BOTS: {this.state.numOfBots}</Segment>
+            </Grid.Column>
           </Grid.Row>
         </Grid>
       </div>
