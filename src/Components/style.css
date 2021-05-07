@@ -95,6 +95,16 @@ label.hide {
   background-color: white;
 }
 
+.homeGrid4{
+  background-color: white;
+  max-width: 1550px;
+}
+
+.homeGrid5{
+  background-color: white;
+  max-width: 1550px;
+}
+
 .SendToPython {
   background-color: white;
   max-width: 1550px;
@@ -103,4 +113,5 @@ label.hide {
 
 .userFollowingListItem {
   background-color: #a514018c;
+  height: 30px;
 }
