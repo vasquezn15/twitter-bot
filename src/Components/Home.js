@@ -232,12 +232,18 @@ export default class Home extends Component {
             </Grid.Column>
           </Grid.Row>
 
-          <Grid.Row>
+          <Grid.Row className = "homeGrid4">
             <Grid.Column>
               <Segment>Summary of Results</Segment>
             </Grid.Column>
-            <Grid.Column>This is where the results go</Grid.Column>
           </Grid.Row>
+
+          <Grid.Row className = "homeGrid5">
+            <Grid.Column>
+              <p>This is where the results go</p>
+            </Grid.Column>
+          </Grid.Row>      
+
         </Grid>
       </div>
     );
