@@ -19,31 +19,20 @@ export default class Home extends Component {
       endList: 10,
       listToggle: true,
       numOfBots: 0,
+      numOfNots: 0,
     };
   }
 
-  componentDidMount() {
-    this.setState(
-      (prevState) => ({
-        followings: prevState.followings,
-        followers: prevState.followers,
-      }),
-      () => console.log("state followings", this.state.followings)
-    );
-
-    // this.getUsersFollowing();
-    // this.getFollowers();
-    console.log("component did mount");
-  }
-
   async loadBotorNot(userId) {
-    var numOfBots = this.state.numOfBots;
     try {
       var isBotorNot = await sendToPython(userId);
-      if ((await isBotorNot) == 0) {
-        numOfBots++;
+      switch (isBotorNot) {
+        case 0:
+          this.setState({ numOfBots: this.state.numOfBots + 1 });
+        case 1:
+          this.setState({ numOfNots: this.state.numOfNots + 1 });
       }
-      this.setState({ numOfBots });
+
       return isBotorNot;
     } catch (error) {
       console.error(error);
@@ -139,7 +128,9 @@ export default class Home extends Component {
           followers.forEach(async (follower, index) => {
             followers[index].isBot = await this.loadBotorNot(follower.id);
           });
-          this.setState({ followers: followers });
+
+          this.setState({ followers });
+          console.log(this.state);
         });
       })
       .catch((error) => {
@@ -159,7 +150,7 @@ export default class Home extends Component {
           followings.forEach(async (user, index) => {
             followings[index].isBot = await this.loadBotorNot(user.id);
           });
-          this.setState({ followings: followings });
+          this.setState({ followings });
         });
       })
       .catch((error) => {
@@ -232,7 +223,6 @@ export default class Home extends Component {
                   endList={this.state.endList}
                   unfollowUser={this.unfollowUser}
                   blockUser={this.blockUser}
-                  loadBotorNot={this.loadBotorNot}
                 />
               </Segment>
             </Grid.Column>
@@ -240,13 +230,14 @@ export default class Home extends Component {
 
           <Grid.Row className="homeGrid4">
             <Grid.Column>
-              <Segment>Summary of Results</Segment>
+              <Segment>Summary of Your Results</Segment>
             </Grid.Column>
           </Grid.Row>
 
           <Grid.Row className="homeGrid5">
             <Grid.Column>
-              <p>This is where the results go</p>
+              <p>Total number of potential Bots: {this.state.numOfBots}</p>
+              <p>Total number of Not Bots in account: {this.state.numOfNots}</p>
             </Grid.Column>
           </Grid.Row>
         </Grid>

@@ -47,7 +47,7 @@ export default class ListFollowing extends Component {
     const ITEMS = this.props.followings
       .slice(this.state.startList, this.state.endList)
       .map((user) => (
-        <List.Item>
+        <List.Item key={user.id}>
           <Image
             className="userFollowingListItem"
             avatar

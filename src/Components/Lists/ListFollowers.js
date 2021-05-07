@@ -22,10 +22,6 @@ export default class ListFollowers extends Component {
     };
   }
 
-  componentDidMount() {
-    console.log(`list followers component did mount`);
-  }
-
   nextPage = (e, data) => {
     var datum = data.activePage * 10;
     this.setState({ endList: datum, startList: datum - 10 });
@@ -40,46 +36,43 @@ export default class ListFollowers extends Component {
   }
 
   render() {
+    const ITEMS = this.props.followers
+      .slice(this.state.startList, this.state.endList)
+      .map((user) => (
+        <List.Item key={user.id}>
+          <Image avatar src={user.profile_image_url} floated="left" />
+          <List.Content floated="left" key={user.id} content={user.username} />
+
+          <List.Content floated="right">
+            <Button
+              size="tiny"
+              floated="right"
+              onClick={() => {
+                this.blockUser(user.id);
+              }}
+            >
+              Block
+            </Button>
+          </List.Content>
+
+          <List.Content
+            animated
+            className={user.isBot ? "" : "userFollowingListItem"}
+          >
+            Bot or Not: &ensp;{" "}
+            {user.isBot >= 0 ? this.toWords(user.isBot) : " "}
+            <Loader
+              active={user.isBot >= 0 ? false : true}
+              size="tiny"
+              inline="center"
+            />
+          </List.Content>
+        </List.Item>
+      ));
     return (
       <div>
         <List animated className="ui-list">
-          {this.props.followers
-            .slice(this.state.startList, this.state.endList)
-            .map((user) => (
-              <List.Item>
-                <Image avatar src={user.profile_image_url} floated="left" />
-                <List.Content
-                  floated="left"
-                  key={user.id}
-                  content={user.username}
-                />
-
-                <List.Content floated="right">
-                  <Button
-                    size="tiny"
-                    floated="right"
-                    onClick={() => {
-                      this.blockUser(user.id);
-                    }}
-                  >
-                    Block
-                  </Button>
-                </List.Content>
-
-                <List.Content
-                  animated
-                  className={user.isBot ? "" : "userFollowingListItem"}
-                >
-                  Bot or Not: &ensp;{" "}
-                  {user.isBot ? this.toWords(user.isBot) : ""}
-                  <Loader
-                    active={user.isBot ? false : true}
-                    size="tiny"
-                    inline="center"
-                  />
-                </List.Content>
-              </List.Item>
-            ))}
+          {ITEMS}
         </List>
         <Pagination
           boundaryRange={0}
