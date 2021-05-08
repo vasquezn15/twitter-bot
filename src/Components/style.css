@@ -103,6 +103,7 @@ label.hide {
 .homeGrid5{
   background-color: white;
   max-width: 1550px;
+  height: 100vh;
 }
 
 .SendToPython {
